@@ -1,36 +1,27 @@
 {
   "name": "nuzlocke-helper",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@types/jest": "24.0.18",
-    "@types/node": "12.7.9",
-    "@types/react": "16.9.4",
-    "@types/react-dom": "16.9.1",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1",
-    "react-scripts": "3.1.2",
-    "typescript": "3.6.3"
-  },
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "author": "Ivan <ivanms1@gmail.com>",
+  "license": "MIT",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "start": "nodemon dist/index.js",
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "@types/lodash": "^4.14.141",
+    "@types/mongoose": "^5.5.18",
+    "@types/node": "^12.7.9",
+    "apollo-server": "^2.9.4",
+    "dotenv": "^8.1.0",
+    "graphql": "^14.5.8",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.7.3",
+    "typescript": "^3.6.3"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.43"
   }
 }
