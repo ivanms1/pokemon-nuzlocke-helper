@@ -2,10 +2,11 @@ import { gql } from 'apollo-server';
 
 const PokemonSchema = gql`
   type Pokemon {
-    id: Int!
+    _id: Int!
     name: String!
     type: [String!]!
     image: String!
+    sprite: String!
     baseStats: [BaseStats!]
   }
 

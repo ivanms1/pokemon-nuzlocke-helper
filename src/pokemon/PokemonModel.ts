@@ -1,10 +1,12 @@
 import { Schema, model, Document } from 'mongoose';
 
-export interface IPokemon extends Document {
+export interface IPokemon extends Document
+{
   _id: number,
   name: string;
   type: [string];
   image: string;
+  sprite: string;
   baseStats: {
     hp: number;
     attack: number;
@@ -26,6 +28,10 @@ const PokemonSchema: Schema = new Schema({
     required: true
   }],
   image: {
+    type: String,
+    required: true
+  },
+  sprite: {
     type: String,
     required: true
   },
