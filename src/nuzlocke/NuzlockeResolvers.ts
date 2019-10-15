@@ -14,7 +14,8 @@ const NuzlockeResolvers = {
       return await Nuzlocke
         .findById(id)
         .populate({ path: 'game', populate: { path: 'region' } })
-        .populate({ path: 'encounters.pokemon', model: 'pokemon' });
+        .populate({ path: 'encounters.pokemon', model: 'pokemon' })
+        .populate({ path: 'team.pokemon', model: 'pokemon' });;
     }
   },
   Mutation: {
@@ -27,7 +28,9 @@ const NuzlockeResolvers = {
     {
       const updatedNuzlocke = await Nuzlocke
         .findByIdAndUpdate(id, { $set: { encounters: input } }, { new: true })
-        .populate({ path: 'game', populate: { path: 'region' } });
+        .populate({ path: 'game', populate: { path: 'region' } })
+        .populate({ path: 'encounters.pokemon', model: 'pokemon' })
+        .populate({ path: 'team.pokemon', model: 'pokemon' });;
 
       return updatedNuzlocke
     },
@@ -35,7 +38,9 @@ const NuzlockeResolvers = {
     {
       return await Nuzlocke
         .findByIdAndUpdate(id, { $set: { team: input } }, { new: true })
-        .populate({ path: 'game', populate: { path: 'region' } });
+        .populate({ path: 'game', populate: { path: 'region' } })
+        .populate({ path: 'encounters.pokemon', model: 'pokemon' })
+        .populate({ path: 'team.pokemon', model: 'pokemon' });;
     },
   }
 }
