@@ -21,6 +21,7 @@ const NuzlockeSchema = gql`
     game: Game!
     encounters: [Encounter!]
     team: [TeamPokemon]
+    user: User
     score: Int
     deaths: Int
   }
