@@ -7,6 +7,14 @@ query GetUser($userId: ID) {
 			game {
 				name
 			}
+			team {
+				pokemon {
+					name
+					sprite
+				}
+				nickname
+				status
+			}
 		}
 	}
 }

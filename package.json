@@ -1,27 +1,29 @@
 {
-  "name": "nuzlocke-helper",
-  "version": "1.0.0",
-  "main": "src/index.ts",
-  "author": "Ivan <ivanms1@gmail.com>",
-  "license": "MIT",
-  "scripts": {
-    "build-ts": "tsc",
-    "watch-ts": "tsc -w",
-    "start": "nodemon dist/index.js",
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts"
-  },
-  "dependencies": {
-    "@types/lodash": "^4.14.141",
-    "@types/mongoose": "^5.5.18",
-    "@types/node": "^12.7.9",
-    "apollo-server": "^2.9.4",
-    "dotenv": "^8.1.0",
-    "graphql": "^14.5.8",
-    "lodash": "^4.17.15",
-    "mongoose": "^5.7.3",
-    "typescript": "^3.6.3"
-  },
-  "devDependencies": {
-    "ts-node-dev": "^1.0.0-pre.43"
-  }
+	"name": "nuzlocke-helper",
+	"version": "1.0.0",
+	"main": "src/index.ts",
+	"author": "Ivan <ivanms1@gmail.com>",
+	"license": "MIT",
+	"scripts": {
+		"build-ts": "tsc",
+		"watch-ts": "tsc -w",
+		"client": "cd client && yarn start ",
+		"start": "concurrently \"yarn run dev\" \"yarn run client\"",
+		"dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts"
+	},
+	"dependencies": {
+		"@types/lodash": "^4.14.141",
+		"@types/mongoose": "^5.5.18",
+		"@types/node": "^12.7.9",
+		"apollo-server": "^2.9.4",
+		"concurrently": "^5.0.0",
+		"dotenv": "^8.1.0",
+		"graphql": "^14.5.8",
+		"lodash": "^4.17.15",
+		"mongoose": "^5.7.3",
+		"typescript": "^3.6.3"
+	},
+	"devDependencies": {
+		"ts-node-dev": "^1.0.0-pre.43"
+	}
 }
