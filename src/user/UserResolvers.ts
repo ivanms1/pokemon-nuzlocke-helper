@@ -1,6 +1,19 @@
 import User from './UserModel';
 
 const UserResolvers = {
+  Query: {
+    getUser: async (_: any, { userId }: any) =>
+    {
+      return await User.findOne({ _id: userId }).populate('nuzlockes')
+        .populate({
+          path: 'nuzlockes', populate: [
+            { path: 'game' },
+            { path: 'encounters.pokemon', model: 'pokemon' },
+            { path: 'team.pokemon', model: 'pokemon' }
+          ]
+        })
+    }
+  },
   Mutation: {
     signUp: async (_: any, { input }: any) =>
     {
@@ -19,7 +32,7 @@ const UserResolvers = {
           {
             throw Error('invalid credentials');
           }
-          return user.populate('nuzlocke').execPopulate();
+          return user.populate('nuzlockes').execPopulate();
         });
     }
   }

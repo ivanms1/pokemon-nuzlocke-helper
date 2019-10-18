@@ -1,0 +1,12 @@
+query GetUser($userId: ID) {
+	user: getUser(userId: $userId) {
+		id
+		name
+		nuzlockes {
+			name
+			game {
+				name
+			}
+		}
+	}
+}

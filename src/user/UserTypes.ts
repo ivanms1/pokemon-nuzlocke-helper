@@ -20,6 +20,10 @@ const UserSchema = gql`
     password: String!
   }
 
+  extend type Query {
+    getUser(userId: ID): User
+  }
+
   type Mutation {
     signUp(input: SignUpInput!): User
     login(input: LoginInput!): User

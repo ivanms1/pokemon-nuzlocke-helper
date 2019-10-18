@@ -1,4 +1,5 @@
 import Nuzlocke from './NuzlockeModel';
+import User from '../user/UserModel';
 
 const NuzlockeResolvers = {
   Query: {
@@ -25,6 +26,7 @@ const NuzlockeResolvers = {
     createNuzlocke: async (_: any, { input }: any) =>
     {
       const nuzlocke = await Nuzlocke.create(input);
+      await User.findByIdAndUpdate(input.user, { $push: { nuzlockes: nuzlocke._id } });
       return nuzlocke.populate({ path: 'game', populate: { path: 'region' } }).execPopulate();
     },
     updateEncounters: async (_: any, { id, input }: any) =>
