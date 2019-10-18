@@ -5,7 +5,6 @@ const UserSchema = gql`
     id: ID!
     name: String!
     email: String!
-    password: String!
     nuzlockes: [Nuzlocke!]
   }
 
