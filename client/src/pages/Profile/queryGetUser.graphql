@@ -3,12 +3,14 @@ query GetUser($userId: ID) {
 		id
 		name
 		nuzlockes {
+			_id
 			name
 			game {
 				name
 			}
 			team {
 				pokemon {
+					_id
 					name
 					sprite
 				}

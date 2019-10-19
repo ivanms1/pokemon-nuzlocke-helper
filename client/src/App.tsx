@@ -9,6 +9,8 @@ import
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 
+import './App.css'
+
 const App: React.FC = () =>
 {
   return (

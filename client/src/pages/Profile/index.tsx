@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import { useQuery } from '@apollo/react-hooks'
 import { loader } from 'graphql.macro';
 import { Button, ProgressBar } from '@blueprintjs/core'
+
+import NuzlockePreview from './NuzlockePreview';
+import AddNuzlockeDrawer from './AddNuzlockeDrawer';
+
+import { ADD } from '@blueprintjs/icons/lib/esm/generated/iconNames';
+
+import styles from './Profile.module.css'
 
 const QUERY_GET_USER = loader('./queryGetUser.graphql')
 
@@ -20,7 +27,7 @@ interface GetUserData
       }
       team: {
         pokemon: {
-          id: number;
+          _id: number;
           name: string;
           sprite: string;
         };
@@ -41,6 +48,7 @@ interface GetUserVars
 
 const Profile = () =>
 {
+  const [isNewNuzlockeOpen, setIsNewNuzlockeOpen] = useState(false)
   const { userId } = useParams()
   const { loading, data } = useQuery<GetUserData, GetUserVars>(QUERY_GET_USER, {
     variables: {
@@ -54,30 +62,26 @@ const Profile = () =>
   }
   const { user } = data
   return (
-    <div>
+    <div className={ styles.Profile }>
       <h1>Welcome { user.name }</h1>
-      <div>
+      <div className={ styles.MyNuzlockes }>
         <h3>My Nuzlockes</h3>
-        <div>
-          { user.nuzlockes.length > 0 ?
-            user.nuzlockes.map(nuzlocke => (
-              <div key={ nuzlocke._id }>
-                <span>{ nuzlocke.game.name }</span>
-                <div>
-                  { nuzlocke.team.map(pokemon => (
-                    <div key={ pokemon.pokemon.id }>
-                      <span>{ pokemon.pokemon.name }</span>
-                      <img src={ pokemon.pokemon.sprite } alt={ `${pokemon.pokemon.name}` } />
-                    </div>
-                  )) }
-                </div>
-              </div>
-            )) : <span>You don't have any nuzlockes yet</span> }
-        </div>
+        { user.nuzlockes.length > 0 ?
+          user.nuzlockes.map(nuzlocke => (
+            <NuzlockePreview key={ nuzlocke._id } nuzlocke={ nuzlocke } />
+          )) : <span>You don't have any nuzlockes yet</span> }
       </div>
-      <Button>
-        Add new Nuzlocke
+      <Button
+        onClick={ () => setIsNewNuzlockeOpen(true) }
+        className={ styles.AddButton }
+        large icon={ ADD }
+      >
+        Add New Nuzlocke
       </Button>
+      <AddNuzlockeDrawer
+        isOpen={ isNewNuzlockeOpen }
+        onClose={ () => setIsNewNuzlockeOpen(false) }
+      />
     </div>
   )
 }
