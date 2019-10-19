@@ -74,7 +74,8 @@ const Profile = () =>
       <Button
         onClick={ () => setIsNewNuzlockeOpen(true) }
         className={ styles.AddButton }
-        large icon={ ADD }
+        large
+        icon={ ADD }
       >
         Add New Nuzlocke
       </Button>

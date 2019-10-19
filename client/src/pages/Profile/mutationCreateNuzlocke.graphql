@@ -1,0 +1,9 @@
+mutation CreateNuzlocke($input: NuzlockeInput!) {
+	createNuzlocke(input: $input) {
+		_id
+		name
+		game {
+			name
+		}
+	}
+}
