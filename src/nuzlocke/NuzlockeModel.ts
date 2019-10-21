@@ -37,8 +37,7 @@ const NuzlockeSchema: Schema = new Schema({
     required: true
   },
   name: {
-    type: String,
-    required: true
+    type: String
   },
   encounters: [{
     location: {

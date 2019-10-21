@@ -1,0 +1,36 @@
+query GetNuzlocke($id: ID!) {
+	nuzlocke: getNuzlocke(id: $id) {
+		_id
+		type
+		name
+		game {
+			id
+			name
+			region {
+				id
+				locations
+			}
+		}
+		team {
+			_id
+			pokemon {
+				_id
+				name
+				sprite
+				image
+			}
+			nickname
+			status
+		}
+		encounters {
+			location
+			pokemon {
+				_id
+				name
+				sprite
+			}
+		}
+		score
+		deaths
+	}
+}

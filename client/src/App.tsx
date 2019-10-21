@@ -8,6 +8,7 @@ import
 
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import Nuzlocke from './pages/Nuzlocke';
 
 import './App.css'
 
@@ -21,6 +22,9 @@ const App: React.FC = () =>
         </Route>
         <Route path="/profile/:userId">
           <Profile />
+        </Route>
+        <Route path="/nuzlocke/:nuzlockeId">
+          <Nuzlocke />
         </Route>
       </Switch>
     </Router>

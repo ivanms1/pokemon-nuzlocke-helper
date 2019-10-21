@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
 import { Button, ProgressBar } from '@blueprintjs/core'
 
@@ -64,8 +64,8 @@ const Profile = () =>
   return (
     <div className={ styles.Profile }>
       <h1>Welcome { user.name }</h1>
+      <h3>My Nuzlockes</h3>
       <div className={ styles.MyNuzlockes }>
-        <h3>My Nuzlockes</h3>
         { user.nuzlockes.length > 0 ?
           user.nuzlockes.map(nuzlocke => (
             <NuzlockePreview key={ nuzlocke._id } nuzlocke={ nuzlocke } />

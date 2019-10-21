@@ -7,17 +7,34 @@
 	font-weight: 100;
 }
 
-.MyNuzlockes > h3 {
+.Profile > h3 {
 	font-size: 2rem;
 	font-weight: 100;
 	margin-bottom: 1rem;
+}
+
+.MyNuzlockes {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
+
+.MyNuzlockes > a {
+	text-decoration: none;
+	color: black;
+}
+
+.MyNuzlockes:hover > a {
+	text-decoration: none;
+	color: black;
 }
 
 .NuzlockePreview {
 	background-color: #ffffff;
 	border-radius: 4px;
 	box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
-	max-width: 20rem;
+	min-height: 8rem;
+	min-width: 18rem;
 	padding: 1rem;
 	transition: all 0.1s ease-in;
 	cursor: pointer;
@@ -28,7 +45,7 @@
 }
 
 .NuzlockePreview > h4 {
-	font-size: 1.4rem;
+	font-size: 1.2rem;
 	font-weight: 200;
 	margin-bottom: 0.2rem;
 }
@@ -37,6 +54,15 @@
 	font-size: 1rem;
 	font-style: italic;
 	font-weight: 100;
+}
+
+.TeamSprites {
+	margin-top: 0.5rem;
+}
+
+.TeamSprites > span {
+	color: grey;
+	/* padding-top: 1rem; */
 }
 
 .AddButton {

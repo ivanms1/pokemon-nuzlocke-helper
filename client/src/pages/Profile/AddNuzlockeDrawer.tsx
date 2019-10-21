@@ -1,7 +1,8 @@
 import React from 'react'
 import { Drawer, Button } from '@blueprintjs/core'
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { loader } from 'graphql.macro';
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import { loader } from 'graphql.macro'
+import { useParams } from 'react-router-dom'
 import * as yup from 'yup'
 import { Form, Formik, Field } from 'formik'
 
@@ -12,9 +13,9 @@ import CustomInput from '../../components/Formik/CustomInput'
 import { PLUS } from '@blueprintjs/icons/lib/esm/generated/iconNames'
 
 import styles from './Profile.module.css'
-import { useParams } from 'react-router-dom';
 
 const QUERY_GET_GAMES = loader('./queryGetGames.graphql')
+const QUERY_GET_USER = loader('./queryGetUser.graphql')
 const MUTATION_CREATE_NUZLOCKE = loader('./mutationCreateNuzlocke.graphql')
 
 interface AddNuzlockeDrawerProps
@@ -30,10 +31,28 @@ const TYPE_OPTIONS = [
 
 const AddNuzlockeDrawer = ({ onClose, isOpen }: AddNuzlockeDrawerProps) =>
 {
-  const { data, loading } = useQuery(QUERY_GET_GAMES);
-  const [createNuzlocke, { loading: createLoading }] = useMutation(MUTATION_CREATE_NUZLOCKE)
-
   const { userId } = useParams()
+
+  const { data, loading } = useQuery(QUERY_GET_GAMES);
+  const [createNuzlocke, { loading: createLoading }] = useMutation(MUTATION_CREATE_NUZLOCKE, {
+    update (cache, { data: { createNuzlocke } })
+    {
+      const data: any = cache.readQuery({
+        query: QUERY_GET_USER, variables: {
+          userId
+        }
+      })
+      cache.writeQuery({
+        query: QUERY_GET_USER,
+        data: {
+          user: {
+            ...data.user,
+            nuzlockes: [...data.user.nuzlockes, createNuzlocke]
+          }
+        }
+      })
+    }
+  })
 
   if (loading || !data)
   {
@@ -72,6 +91,8 @@ const AddNuzlockeDrawer = ({ onClose, isOpen }: AddNuzlockeDrawerProps) =>
               }
             }
           })
+
+          onClose()
         } }
       >
         { () => (

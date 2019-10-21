@@ -33,6 +33,7 @@ const NuzlockeSchema = gql`
   }
 
   type TeamPokemon {
+    _id: ID!
     pokemon: Pokemon
     nickname: String
     status: String
