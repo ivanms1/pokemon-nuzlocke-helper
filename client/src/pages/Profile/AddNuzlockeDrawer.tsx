@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import * as yup from 'yup'
 import { Form, Formik, Field } from 'formik'
 
-import CustomSelect from '../../components/Formik/CustomSelect'
+import Select from '../../components/Formik/Select'
 import CustomInput from '../../components/Formik/CustomInput'
 
 
@@ -105,7 +105,7 @@ const AddNuzlockeDrawer = ({ onClose, isOpen }: AddNuzlockeDrawerProps) =>
               placeholder="Select..."
               helperText="Choose what game you will play"
               labelInfo="(required)"
-              component={ CustomSelect }
+              component={ Select }
             />
             <Field
               id="name"
@@ -124,7 +124,7 @@ const AddNuzlockeDrawer = ({ onClose, isOpen }: AddNuzlockeDrawerProps) =>
               helperText="What type of nuzlocke you will play"
               labelInfo="(required)"
               options={ TYPE_OPTIONS }
-              component={ CustomSelect }
+              component={ Select }
             />
             <Button
               icon={ PLUS }

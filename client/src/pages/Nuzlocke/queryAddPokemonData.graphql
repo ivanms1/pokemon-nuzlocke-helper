@@ -1,0 +1,12 @@
+query AddPokemonData($regionId: Int!) {
+  pokemons: getPokemons {
+    _id
+    name
+    sprite
+  }
+  region: getRegion(id: $regionId){
+    id
+    name
+    locations
+  } 
+}

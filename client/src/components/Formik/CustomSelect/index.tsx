@@ -1,76 +1,81 @@
-import React from 'react'
-import { HTMLSelect, FormGroup } from '@blueprintjs/core'
-import classNames from 'classnames'
-import { FieldProps } from 'formik'
+import React from 'react';
+import { Button, MenuItem, FormGroup } from "@blueprintjs/core";
+import { Select, ItemRenderer, ItemPredicate } from "@blueprintjs/select";
+import { FieldProps } from 'formik';
 
-import styles from './CustomSelect.module.css'
+import styles from './CustomSelect.module.css';
+
+const BlueprintSelect = Select.ofType<any>();
 
 interface CustomSelectProps
 {
-  id: string;
+  id: string | number;
   options: {
-    value: string | number;
-    label: string;
-  }[]
-  isMulti: boolean;
-  className: string;
-  placeholder: string;
+    value: string,
+    label: string
+  }[];
+  className?: string;
+  label?: string;
+  labelInfo?: string;
   helperText: string;
-  label: string;
-  labelInfo: string;
+  placeholder: string;
 }
-
-
 const CustomSelect = ({
   id,
   field,
   form,
   options,
   className,
-  isMulti,
-  placeholder,
-  helperText,
   label,
+  helperText,
   labelInfo,
+  placeholder,
   ...props
-}:
-  CustomSelectProps & { form: FieldProps['form'], field: FieldProps['field'] }) =>
+}: CustomSelectProps & { form: FieldProps['form'], field: FieldProps['field'] }) =>
 {
-  const { touched, errors, setFieldValue } = form
+  const filterItems: ItemPredicate<any> = (query, item) =>
+  {
+    return item.label.toLowerCase().indexOf(query.toLowerCase()) >= 0;
+  };
+
+  const { touched, errors, setFieldValue } = form;
+
+  const renderItems: ItemRenderer<any> = (item: any, { handleClick, modifiers }) => (
+    <MenuItem
+      key={ item.value }
+      icon={ item.icon && <img className={ styles.ItemIcon } src={ item.icon } alt={ item.name } /> }
+      active={ modifiers.active }
+      label={ item.label }
+      onClick={ handleClick }
+      text={ item.query }
+    />
+  )
+
+
+  const currentItem = options.find(opt => opt.value === field.value);
 
   return (
     <FormGroup
       label={ label }
       labelInfo={ labelInfo }
-      labelFor={ id || field.name }
+      labelFor={ field.name }
       helperText={ touched[field.name] && errors[field.name] ? errors[field.name] : helperText }
       intent={ touched[field.name] && errors[field.name] ? 'danger' : 'none' }
     >
-      <HTMLSelect
-        id={ id || field.name }
-        className={ classNames(styles.Select, className) }
-        name={ field.name }
-        value={ field.value }
-        onChange={ e => setFieldValue(field.name, e.target.value) }
+      <BlueprintSelect
+        items={ options }
+        itemPredicate={ filterItems }
+        itemRenderer={ renderItems }
+        noResults={ <MenuItem disabled={ true } text="No results." /> }
+        activeItem={ currentItem }
+        onItemSelect={ item => setFieldValue(field.name, item.value) }
         { ...props }
       >
-        { placeholder && (
-          < option value=''>
-            { placeholder }
-          </option>
-        )
-        }
-        {
-          options.map(option => (
-            <option key={ option.value } value={ option.value }>
-              { option.label }
-            </option>
-          ))
-        }
-      </HTMLSelect >
+        <Button text={ currentItem ? currentItem.label : placeholder } rightIcon="double-caret-vertical" />
+      </BlueprintSelect>
     </FormGroup>
 
   )
 }
 
-export default CustomSelect
+export default CustomSelect;

@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
-import { ProgressBar } from '@blueprintjs/core';
+import { ProgressBar, Tooltip, Position, Button } from '@blueprintjs/core';
 
 import styles from './Nuzlocke.module.css';
+import { ADD } from '@blueprintjs/icons/lib/esm/generated/iconNames';
+import AddNewPokemon from './AddNewPokemon';
 
 const QUERY_GET_NUZLOCKE = loader('./queryGetNuzlocke.graphql');
 
 
 const Nuzlocke = () =>
 {
-  const { nuzlockeId } = useParams()
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const { nuzlockeId } = useParams();
 
   const { data, loading } = useQuery(QUERY_GET_NUZLOCKE, {
     variables: {
@@ -25,7 +28,6 @@ const Nuzlocke = () =>
   }
 
   const { nuzlocke } = data;
-  console.log(data)
 
   return (
     <div className={ styles.Nuzlocke }>
@@ -33,16 +35,35 @@ const Nuzlocke = () =>
         { nuzlocke && <h1>{ nuzlocke.name }</h1> }
         <h2>{ nuzlocke.game.name }</h2>
         <span>{ nuzlocke.type }</span>
-        { nuzlocke.team.length > 0 ? (
-          <div className={ styles.Team }>
-            { nuzlocke.team.map((pokemon: any) => (
-              <div key={ pokemon._id }>
+      </div>
+      { nuzlocke.team.length > 0 ? (
+        <div className={ styles.Team }>
+          { nuzlocke.team.map((pokemon: any) => (
+            <Tooltip
+              key={ pokemon._id }
+              content={ pokemon.nickname ? pokemon.nickname : pokemon.pokemon.name }
+              position={ Position.TOP }
+            >
+              <div className={ styles.TeamPokemon }>
                 <img src={ pokemon.pokemon.image } alt={ pokemon.pokemon.name } />
               </div>
-            )) }
-          </div>
-        ) : <span>No Pokemons added yet :(</span> }
-      </div>
+            </Tooltip>
+          )) }
+        </div>
+      ) : <span>No Pokemons added yet :(</span> }
+      <Button
+        icon={ ADD }
+        intent="primary"
+        onClick={() => setIsAddModalOpen(true)}
+        large
+      >
+        Add Encounter
+      </Button>
+      <AddNewPokemon
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        regionId={nuzlocke.game.region.id}
+      />
     </div>
   )
 }

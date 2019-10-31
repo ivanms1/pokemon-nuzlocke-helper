@@ -1,11 +1,11 @@
 import React from 'react'
-import { FormGroup, InputGroup } from '@blueprintjs/core'
+import { FormGroup, InputGroup, Checkbox } from '@blueprintjs/core'
 import { FieldProps } from 'formik'
 
 const CustomInput = ({
   form,
   field,
-  type,
+  type = 'text',
   helperText,
   labelInfo,
   label,
@@ -31,13 +31,21 @@ const CustomInput = ({
       labelFor={ field.name }
       intent={ touched[field.name] && errors[field.name] ? 'danger' : 'none' }
     >
-      <InputGroup
-        type={ type || 'text' }
+      {type === "checkbox" && (
+        <Checkbox
+          checked={field.value}
+          onChange={(e: any) => setFieldValue(field.name, e.target.checked)}
+        />
+      )}
+      {(type === 'text' || type === 'search') && (
+        <InputGroup
+        type={ type }
         value={ field.value }
         id={ field.name }
         onChange={ (e: any) => setFieldValue(field.name, e.target.value) }
         { ...props }
       />
+      )}
     </FormGroup>
   )
 }
