@@ -36,9 +36,9 @@ const Nuzlocke = () =>
         <h2>{ nuzlocke.game.name }</h2>
         <span>{ nuzlocke.type }</span>
       </div>
-      { nuzlocke.team.length > 0 ? (
+      { nuzlocke.pokemons.length > 0 ? (
         <div className={ styles.Team }>
-          { nuzlocke.team.map((pokemon: any) => (
+          { nuzlocke.pokemons.map((pokemon: any) => (
             <Tooltip
               key={ pokemon._id }
               content={ pokemon.nickname ? pokemon.nickname : pokemon.pokemon.name }
@@ -63,6 +63,7 @@ const Nuzlocke = () =>
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         regionId={nuzlocke.game.region.id}
+        nuzlocke={nuzlocke}
       />
     </div>
   )

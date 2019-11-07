@@ -10,8 +10,7 @@ const NuzlockeSchema = gql`
   enum StatusType {
     ALIVE
     DEAD
-    RELEASED
-    IN_PC
+    SEEN
   }
 
   type Nuzlocke {
@@ -19,29 +18,21 @@ const NuzlockeSchema = gql`
     type: NuzlockeType!
     name: String
     game: Game!
-    encounters: [Encounter!]
-    team: [TeamPokemon]
+    pokemons: [NuzlockePokemon!]
     user: User
     score: Int
     deaths: Int
   }
 
-  type Encounter {
-    location: String
-    pokemon: Pokemon
-    isCaptured: Boolean
-  }
-
-  type TeamPokemon {
+  type NuzlockePokemon {
     _id: ID!
     pokemon: Pokemon
+    location: String
+    isCaptured: Boolean
+    inTeam: Boolean
     nickname: String
     status: String
-  }
-
-  extend type Query {
-    getNuzlocke(id:ID!): Nuzlocke
-    getNuzlockes(userId: ID): Nuzlocke
+    level: Int
   }
 
   input NuzlockeInput {
@@ -51,25 +42,25 @@ const NuzlockeSchema = gql`
     user: ID
   }
 
-  input EncounterInput {
+  input NuzlockePokemonInput {
+    pokemon: Int!
     location: String!
-    pokemon: Int!
     isCaptured: Boolean!
-  }
-
-  input TeamInput {
-    pokemon: Int!
     nickname: String
+    inTeam: Boolean
     status: StatusType!
     level: Int
     moves: [Int!]
+  }
 
+  extend type Query {
+    getNuzlocke(id:ID!): Nuzlocke
+    getNuzlockes(userId: ID): Nuzlocke
   }
   
   extend type Mutation {
     createNuzlocke(input: NuzlockeInput!): Nuzlocke
-    updateEncounters(id: ID! input: [EncounterInput!]!): Nuzlocke
-    updateTeam(id: ID! input: [TeamInput]!): Nuzlocke
+    addPokemon(id: ID! pokemon: NuzlockePokemonInput!): Nuzlocke
   }
 `
 

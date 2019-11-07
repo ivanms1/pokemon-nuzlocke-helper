@@ -1,34 +1,43 @@
 .Nuzlocke {
-	margin: 5rem 8rem;
+  margin: 5rem 8rem;
 }
 
 .Team {
-	background-color: rgba(0, 0, 0, 0.2);
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-	display: grid;
-	width: 21rem;
-	grid-template-columns: 7rem 7rem 7rem;
-	grid-template-rows: 7rem 7rem;
-	grid-gap: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  display: grid;
+  width: 21rem;
+  grid-template-columns: 7rem 7rem 7rem;
+  grid-template-rows: 7rem 7rem;
+  grid-gap: 1px;
 }
 
 .TeamPokemon {
-	width: 7rem;
-	height: 7rem;
-	background-color: white;
-	cursor: pointer;
+  width: 7rem;
+  height: 7rem;
+  background-color: white;
+  cursor: pointer;
 }
 
 .TeamPokemon > img {
-	width: 100%;
-	height: 100%;
-	padding: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
 }
 
 .AddNewPokemon {
-	
+  
 }
 
 .AddNewPokemonContainer {
-	
+  padding: 1rem;
+}
+
+.LocationFields {
+  display: flex;
+  align-items: center;
+}
+
+.LocationCheckbox {
+	margin-left: 0.5rem; 
 }

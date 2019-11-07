@@ -5,21 +5,55 @@ export interface INuzlocke extends Document
   type: string;
   game: number;
   name: string;
-  encounters: {
+  pokemons: {
+    pokemon: number;
     location: string;
-    pokemon: number;
     isCaptured: boolean;
-  }[];
-  team: {
-    pokemon: number;
+    inTeam: boolean;
     nickname: string;
     status: string;
     level: number;
     moves: number[];
-  }[],
+  }[];
+  inTeam: boolean;
   score: number;
   deaths: number;
 }
+
+const NuzlockePokemonSchema: Schema = new Schema({
+  location: {
+    type: String,
+    required: true
+  },
+  pokemon: {
+    type: Number,
+    ref: 'pokemon'
+  },
+  isCaptured: {
+    type: Boolean,
+    required: true
+  },
+  nickname: {
+    type: String
+  },
+  status: {
+    type: String,
+    enum: ['ALIVE', 'DEAD', 'SEEN'],
+    required: true
+  },
+  inTeam: {
+    type: Boolean,
+    required: true,
+  },
+  level: {
+    type: Number,
+    default: 1
+  },
+  moves: [{
+    type: Number,
+    ref: 'move'
+  }]
+})
 
 const NuzlockeSchema: Schema = new Schema({
   type: {
@@ -39,43 +73,8 @@ const NuzlockeSchema: Schema = new Schema({
   name: {
     type: String
   },
-  encounters: [{
-    location: {
-      type: String,
-      required: true
-    },
-    pokemon: {
-      type: Number,
-      ref: 'pokemon'
-    },
-    isCaptured: {
-      type: Boolean,
-      required: true
-    }
-
-  }],
-  team: [{
-    pokemon: {
-      type: Number,
-      required: true,
-      ref: 'pokemon'
-    },
-    nickname: {
-      type: String
-    },
-    status: {
-      type: String,
-      enum: ['ALIVE', 'DEAD', 'RELEASED', 'IN_PC'],
-      required: true
-    },
-    level: {
-      type: Number,
-      default: 1
-    },
-    moves: [{
-      type: Number,
-      ref: 'move'
-    }]
+  pokemons: [{
+    type: NuzlockePokemonSchema
   }],
   score: {
     type: Number,

@@ -11,7 +11,7 @@ query GetNuzlocke($id: ID!) {
 				locations
 			}
 		}
-		team {
+		pokemons {
 			_id
 			pokemon {
 				_id
@@ -19,16 +19,12 @@ query GetNuzlocke($id: ID!) {
 				sprite
 				image
 			}
+			location
+			isCaptured
 			nickname
 			status
-		}
-		encounters {
-			location
-			pokemon {
-				_id
-				name
-				sprite
-			}
+			inTeam
+			level
 		}
 		score
 		deaths

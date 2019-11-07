@@ -9,6 +9,8 @@ const CustomInput = ({
   helperText,
   labelInfo,
   label,
+  className,
+  checkboxLabel,
   ...props
 }
   : {
@@ -17,7 +19,9 @@ const CustomInput = ({
     type: string,
     label: string,
     helperText: string,
-    labelInfo: string
+    labelInfo: string,
+    className: string,
+    checkboxLabel: string;
   }) =>
 {
 
@@ -26,6 +30,7 @@ const CustomInput = ({
   return (
     <FormGroup
       label={ label }
+      className={className}
       labelInfo={ labelInfo }
       helperText={ touched[field.name] && errors[field.name] ? errors[field.name] : helperText }
       labelFor={ field.name }
@@ -34,6 +39,8 @@ const CustomInput = ({
       {type === "checkbox" && (
         <Checkbox
           checked={field.value}
+          className={className}
+          label={checkboxLabel}
           onChange={(e: any) => setFieldValue(field.name, e.target.checked)}
         />
       )}

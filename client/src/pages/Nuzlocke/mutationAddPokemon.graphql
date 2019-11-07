@@ -1,0 +1,20 @@
+mutation AddPokemon($id: ID! $pokemon: NuzlockePokemonInput!) {
+  addPokemon(id: $id pokemon: $pokemon) {
+    _id
+    pokemons {
+			_id
+			pokemon {
+				_id
+				name
+				sprite
+				image
+			}
+			location
+			isCaptured
+			nickname
+			status
+			inTeam
+			level
+		}
+  }
+}

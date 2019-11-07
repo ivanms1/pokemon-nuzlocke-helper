@@ -9,8 +9,7 @@ const NuzlockeResolvers = {
         .find({ user: userId })
         .populate('user')
         .populate({ path: 'game', populate: { path: 'region' } })
-        .populate({ path: 'encounters', populate: { path: 'pokemon' } })
-        .populate({ path: 'team.pokemon', model: 'pokemon' });
+        .populate({ path: 'pokemons', populate: { path: 'pokemon' } });
     },
     getNuzlocke: async (_: any, { id }: any) =>
     {
@@ -18,8 +17,7 @@ const NuzlockeResolvers = {
         .findById(id)
         .populate('user')
         .populate({ path: 'game', populate: { path: 'region' } })
-        .populate({ path: 'encounters.pokemon', model: 'pokemon' })
-        .populate({ path: 'team.pokemon', model: 'pokemon' });
+        .populate({ path: 'pokemons.pokemon', model: 'pokemon' });
     }
   },
   Mutation: {
@@ -29,24 +27,15 @@ const NuzlockeResolvers = {
       await User.findByIdAndUpdate(input.user, { $push: { nuzlockes: nuzlocke._id } });
       return nuzlocke.populate({ path: 'game', populate: { path: 'region' } }).execPopulate();
     },
-    updateEncounters: async (_: any, { id, input }: any) =>
+    addPokemon: async (_: any, { id, pokemon }: any) =>
     {
       const updatedNuzlocke = await Nuzlocke
-        .findByIdAndUpdate(id, { $set: { encounters: input } }, { new: true })
+        .findByIdAndUpdate(id, { $push: { pokemons: pokemon } }, { new: true })
         .populate({ path: 'game', populate: { path: 'region' } })
-        .populate({ path: 'encounters.pokemon', model: 'pokemon' })
-        .populate({ path: 'team.pokemon', model: 'pokemon' });;
+        .populate({ path: 'pokemons.pokemon', model: 'pokemon' });
 
       return updatedNuzlocke
-    },
-    updateTeam: async (_: any, { id, input }: any) =>
-    {
-      return await Nuzlocke
-        .findByIdAndUpdate(id, { $set: { team: input } }, { new: true })
-        .populate({ path: 'game', populate: { path: 'region' } })
-        .populate({ path: 'encounters.pokemon', model: 'pokemon' })
-        .populate({ path: 'team.pokemon', model: 'pokemon' });;
-    },
+    }
   }
 }
 
