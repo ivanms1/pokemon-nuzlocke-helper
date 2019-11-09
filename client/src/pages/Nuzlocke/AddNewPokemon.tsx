@@ -78,7 +78,7 @@ const AddNewPokemon = ({ isOpen, onClose, regionId, nuzlocke }: AddNewPokemonPro
             customLocation: '',
             pokemon: '',
             isCaptured: false,
-            inTeam: true,
+            inTeam: false,
             nickname: '',
             isLocationCustom: false
           } }
@@ -164,6 +164,13 @@ const AddNewPokemon = ({ isOpen, onClose, regionId, nuzlocke }: AddNewPokemonPro
                     label="Enter Pokemon nickname"
                     component={ CustomInput }
                     placeholder="Pebbles"
+                  />
+                  <Field
+                    id="inTeam"
+                    name="inTeam"
+                    checkboxLabel="add to team"
+                    type="checkbox"
+                    component={ CustomInput }
                   />
                   <Button
                     type="submit"

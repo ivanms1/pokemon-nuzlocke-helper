@@ -2,7 +2,16 @@
   margin: 5rem 8rem;
 }
 
-.Team {
+.Pokemons {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.Pokemons > div:not(:last-child) {
+  margin-right: 5rem;
+}
+
+.TeamGrid {
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
   display: grid;
@@ -40,4 +49,9 @@
 
 .LocationCheckbox {
 	margin-left: 0.5rem; 
+}
+
+.Encounter {
+  display: flex;
+  align-items: center;
 }
