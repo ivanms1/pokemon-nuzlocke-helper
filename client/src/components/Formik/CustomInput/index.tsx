@@ -1,5 +1,5 @@
-import React from 'react'
-import { FormGroup, InputGroup, Checkbox } from '@blueprintjs/core'
+import React, { useState } from 'react'
+import { FormGroup, InputGroup, Checkbox, Button, Intent } from '@blueprintjs/core'
 import { FieldProps } from 'formik'
 
 const CustomInput = ({
@@ -24,35 +24,54 @@ const CustomInput = ({
     checkboxLabel: string;
   }) =>
 {
+  const [showPassword, setShowPassword] = useState(false);
 
-  const { touched, errors, setFieldValue } = form
+  const { touched, errors, setFieldValue } = form;
+
+  const lockIcon = (
+    <Button
+      icon={ showPassword ? "unlock" : "lock" }
+      intent={ Intent.WARNING }
+      minimal={ true }
+      onClick={ () => setShowPassword(!showPassword) }
+    />
+  );
 
   return (
     <FormGroup
       label={ label }
-      className={className}
+      className={ className }
       labelInfo={ labelInfo }
       helperText={ touched[field.name] && errors[field.name] ? errors[field.name] : helperText }
       labelFor={ field.name }
       intent={ touched[field.name] && errors[field.name] ? 'danger' : 'none' }
     >
-      {type === "checkbox" && (
+      { type === "checkbox" ? (
         <Checkbox
-          checked={field.value}
-          className={className}
-          label={checkboxLabel}
-          onChange={(e: any) => setFieldValue(field.name, e.target.checked)}
+          checked={ field.value }
+          className={ className }
+          label={ checkboxLabel }
+          onChange={ (e: any) => setFieldValue(field.name, e.target.checked) }
         />
-      )}
-      {(type === 'text' || type === 'search') && (
+      ) : type === 'password' ? (
         <InputGroup
-        type={ type }
-        value={ field.value }
-        id={ field.name }
-        onChange={ (e: any) => setFieldValue(field.name, e.target.value) }
-        { ...props }
-      />
-      )}
+          type={ showPassword ? 'text' : 'password' }
+          value={ field.value }
+          rightElement={lockIcon}
+          id={ field.name }
+          onChange={ (e: any) => setFieldValue(field.name, e.target.value) }
+          { ...props }
+        />
+      ) : (
+            <InputGroup
+              type={ type }
+              value={ field.value }
+              id={ field.name }
+              onChange={ (e: any) => setFieldValue(field.name, e.target.value) }
+              { ...props }
+            />
+          ) }
+
     </FormGroup>
   )
 }
