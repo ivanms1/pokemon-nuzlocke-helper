@@ -12,25 +12,28 @@ interface NuzlockePreviewProps
 		game: {
 			name: string;
 		};
-		team: {
+		pokemons: {
+			_id: number;
+			inTeam: boolean;
 			pokemon: {
-				_id: number;
+				_id: string;
 				name: string;
 				sprite: string;
-			};
+			}
 		}[];
 	};
 }
 
 const NuzlockePreview = ({ nuzlocke }: NuzlockePreviewProps) =>
 {
+	const team = nuzlocke.pokemons.filter(pok => pok.inTeam)
 	return (
 		<Link to={ `/nuzlocke/${nuzlocke._id}` }>
 			<div className={ styles.NuzlockePreview }>
 				{ nuzlocke.name && <h4>{ nuzlocke.name }</h4> }
 				<span>Pokemon { nuzlocke.game.name }</span>
 				<div className={ styles.TeamSprites }>
-					{ nuzlocke.team.length > 0 ? nuzlocke.team.map(pokemon => (
+					{ team.length > 0 ? team.map(pokemon => (
 						<Tooltip
 							key={ pokemon.pokemon._id }
 							content={ pokemon.pokemon.name }

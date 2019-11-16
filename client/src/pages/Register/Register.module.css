@@ -6,6 +6,10 @@
 	margin: 5rem;
 }
 
+.RegisterForm {
+	margin-bottom: 1rem;
+}
+
 .RegisterForm > h1 {
-  text-align: center;
+	text-align: center;
 }

@@ -8,8 +8,7 @@ const UserResolvers = {
         .populate({
           path: 'nuzlockes', populate: [
             { path: 'game' },
-            { path: 'encounters.pokemon', model: 'pokemon' },
-            { path: 'team.pokemon', model: 'pokemon' }
+            { path: 'pokemons.pokemon', model: 'pokemon' }
           ]
         })
     }
@@ -17,7 +16,8 @@ const UserResolvers = {
   Mutation: {
     signUp: async (_: any, { input }: any) =>
     {
-      return await User.create(input);
+      const newUser = await User.create(input);
+      return newUser;
     },
     login: async (_: any, { input }: any) =>
     {

@@ -1,22 +1,28 @@
 query GetUser($userId: ID) {
-	user: getUser(userId: $userId) {
-		id
-		name
-		nuzlockes {
-			_id
-			name
-			game {
-				name
-			}
-			team {
-				pokemon {
-					_id
-					name
-					sprite
-				}
-				nickname
-				status
-			}
-		}
-	}
+  user: getUser(userId: $userId) {
+    id
+    name
+    nuzlockes {
+      _id
+      name
+      game {
+        name
+      }
+      pokemons {
+        _id
+        pokemon {
+          _id
+          name
+          sprite
+          image
+        }
+        location
+        isCaptured
+        nickname
+        status
+        inTeam
+        level
+      }
+    }
+  }
 }

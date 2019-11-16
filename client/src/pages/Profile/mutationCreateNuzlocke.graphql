@@ -1,12 +1,24 @@
 mutation CreateNuzlocke($input: NuzlockeInput!) {
-	createNuzlocke(input: $input) {
-		_id
-		name
-		game {
-			name
-		}
-		team {
-			status
-		}
-	}
+  createNuzlocke(input: $input) {
+    _id
+    name
+    game {
+      name
+    }
+    pokemons {
+      _id
+      pokemon {
+        _id
+        name
+        sprite
+        image
+      }
+      location
+      isCaptured
+      nickname
+      status
+      inTeam
+      level
+    }
+  }
 }

@@ -25,14 +25,14 @@ interface GetUserData
       game: {
         name: string;
       }
-      team: {
+      pokemons: {
+        _id: number;
+        inTeam: boolean;
         pokemon: {
-          _id: number;
+          _id: string;
           name: string;
           sprite: string;
-        };
-        status: string;
-        nickname: string;
+        }
       }[];
       score: number;
       deaths: number;
