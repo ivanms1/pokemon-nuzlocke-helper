@@ -39,7 +39,7 @@ function Encounters ({ pokemons }: EncountersProps)
 
           ))
         ) : (
-            <span>Impressive, no dead mons</span>
+            <span>No encounters yet</span>
           ) }
       </div>
     </div>

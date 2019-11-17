@@ -15,6 +15,7 @@ interface NuzlockePreviewProps
 		pokemons: {
 			_id: number;
 			inTeam: boolean;
+			nickname: string;
 			pokemon: {
 				_id: string;
 				name: string;
@@ -26,7 +27,8 @@ interface NuzlockePreviewProps
 
 const NuzlockePreview = ({ nuzlocke }: NuzlockePreviewProps) =>
 {
-	const team = nuzlocke.pokemons.filter(pok => pok.inTeam)
+	const team = nuzlocke.pokemons.filter(pok => pok.inTeam);
+	console.log(team)
 	return (
 		<Link to={ `/nuzlocke/${nuzlocke._id}` }>
 			<div className={ styles.NuzlockePreview }>
@@ -36,7 +38,7 @@ const NuzlockePreview = ({ nuzlocke }: NuzlockePreviewProps) =>
 					{ team.length > 0 ? team.map(pokemon => (
 						<Tooltip
 							key={ pokemon.pokemon._id }
-							content={ pokemon.pokemon.name }
+							content={pokemon.nickname || pokemon.pokemon.name }
 							position={ Position.TOP }
 						>
 							<img src={ pokemon.pokemon.sprite } alt={ `${pokemon.pokemon.name}` } />

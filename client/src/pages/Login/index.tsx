@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { useHistory, Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
-import { Button, Intent } from '@blueprintjs/core'
+import { Button, Intent, Toaster, Toast } from '@blueprintjs/core'
 import { loader } from 'graphql.macro';
 import * as yup from 'yup'
 
@@ -18,23 +18,13 @@ interface LoginVars
   password: string;
 }
 
-interface LoginResult
-{
-  login: {
-    id: string;
-  }
-  name: string;
-  nuzlockes: {
-    game: {
-      name: string
-    }
-  }
-
-}
-
 const Login = () =>
 {
-  const [login, { loading }] = useMutation<LoginResult, { input: LoginVars }>(MUTATION_LOGIN)
+  const [alert, setAlert] = useState(false);
+
+  const [login, { loading }] = useMutation(MUTATION_LOGIN, {
+    errorPolicy: 'all'
+  })
   const history = useHistory();
 
   const emailIcon = (
@@ -62,9 +52,9 @@ const Login = () =>
             variables: {
               input: values
             }
-          });
+          }).catch(err => setAlert(true));
 
-          if (!loading && response.data)
+          if (response)
           {
             history.push(`/profile/${response.data.login.id}`)
           }
@@ -78,7 +68,7 @@ const Login = () =>
             <Field
               name='email'
               placeholder='email'
-              rightElement={emailIcon}
+              rightElement={ emailIcon }
               component={ CustomInput }
             />
             <Field
@@ -91,6 +81,11 @@ const Login = () =>
           </Form>
         ) }
       </Formik>
+      { alert && (
+        <Toaster position='top'>
+          <Toast intent="danger" message="An error has occurred" onDismiss={ () => setAlert(false) } />
+        </Toaster>
+      ) }
       <Link to="/register">Don't have an account?</Link>
     </div>
   )

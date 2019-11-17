@@ -28,6 +28,7 @@ interface GetUserData
       pokemons: {
         _id: number;
         inTeam: boolean;
+        nickname: string;
         pokemon: {
           _id: string;
           name: string;

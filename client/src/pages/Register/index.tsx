@@ -15,7 +15,7 @@ const MUTATION_SIGNUP = loader('./mutationSignUp.graphql')
 const Register = () =>
 {
   const [alert, setAlert] = useState(false);
-  const [signUp, { data, loading, error }] = useMutation(MUTATION_SIGNUP);
+  const [signUp, { loading }] = useMutation(MUTATION_SIGNUP);
 
   const history = useHistory();
 
@@ -61,17 +61,16 @@ const Register = () =>
         }) }
         onSubmit={ async ({ repeatPassword, ...values }) =>
         {
-          await signUp({
+          const response = await signUp({
             variables: {
               input: values
             }
-          })
-          if (error || !data)
-          {
-            setAlert(true);
-          } else {
-            history.push(`/profile/${data.signUp.id}`)
+          }).catch(err => setAlert(true))
+ 
+          if(response) {
+            history.push(`/profile/${response.data.signUp.id}`)
           }
+          
         } }
       >
         { () => (
