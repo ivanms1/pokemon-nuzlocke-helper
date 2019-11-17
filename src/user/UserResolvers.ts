@@ -2,6 +2,10 @@ import User from './UserModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+require('dotenv').config();
+
+const jwtKey = process.env.JWT_KEY;
+
 const UserResolvers = {
   Query: {
     getUser: async (_: any, { userId }: any) =>
@@ -32,7 +36,7 @@ const UserResolvers = {
         userId: newUser.id,
         email: newUser.email
       },
-        'secretkey',
+        jwtKey,
         {
           expiresIn: '3h'
         })
@@ -66,7 +70,7 @@ const UserResolvers = {
         userId: user.id,
         email: user.email
       },
-        'secretkey',
+        jwtKey,
         {
           expiresIn: '3h'
         })
