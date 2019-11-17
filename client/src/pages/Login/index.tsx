@@ -56,7 +56,7 @@ const Login = () =>
 
           if (response)
           {
-            history.push(`/profile/${response.data.login.id}`)
+            history.push(`/profile/${response.data.login.userId}`)
           }
         } }
       >

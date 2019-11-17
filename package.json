@@ -12,13 +12,17 @@
 		"dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts"
 	},
 	"dependencies": {
+		"@types/bcryptjs": "^2.4.2",
+		"@types/jsonwebtoken": "^8.3.5",
 		"@types/lodash": "^4.14.141",
 		"@types/mongoose": "^5.5.18",
 		"@types/node": "^12.7.9",
 		"apollo-server": "^2.9.4",
+		"bcryptjs": "^2.4.3",
 		"concurrently": "^5.0.0",
 		"dotenv": "^8.1.0",
 		"graphql": "^14.5.8",
+		"jsonwebtoken": "^8.5.1",
 		"lodash": "^4.17.15",
 		"mongoose": "^5.7.3",
 		"typescript": "^3.6.3"

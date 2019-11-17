@@ -8,6 +8,12 @@ const UserSchema = gql`
     nuzlockes: [Nuzlocke!]
   }
 
+  type LoginToken {
+    userId: ID!
+    token: String
+    tokenExpiration: Int
+  }
+
   input SignUpInput {
     name: String!
     email: String!
@@ -24,8 +30,8 @@ const UserSchema = gql`
   }
 
   type Mutation {
-    signUp(input: SignUpInput!): User
-    login(input: LoginInput!): User
+    signUp(input: SignUpInput!): LoginToken
+    login(input: LoginInput!): LoginToken
     updateUser(input: SignUpInput!): User
   }
 `

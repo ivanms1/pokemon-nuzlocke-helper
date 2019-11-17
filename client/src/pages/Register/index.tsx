@@ -68,7 +68,7 @@ const Register = () =>
           }).catch(err => setAlert(true))
  
           if(response) {
-            history.push(`/profile/${response.data.signUp.id}`)
+            history.push(`/profile/${response.data.signUp.userId}`)
           }
           
         } }

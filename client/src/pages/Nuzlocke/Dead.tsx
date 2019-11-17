@@ -1,8 +1,6 @@
 import React from 'react';
 import { Position, Tooltip } from '@blueprintjs/core';
 
-import styles from './Nuzlocke.module.css';
-
 interface DeadProps
 {
   pokemons: {
