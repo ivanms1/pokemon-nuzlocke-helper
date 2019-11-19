@@ -1,7 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
-export interface INuzlocke extends Document
-{
+export interface INuzlocke extends Document {
   type: string;
   game: number;
   name: string;
@@ -29,6 +28,10 @@ const NuzlockePokemonSchema: Schema = new Schema({
     type: Number,
     ref: 'pokemon'
   },
+  partner: {
+    type: Number,
+    ref: 'pokemon'
+  },
   isCaptured: {
     type: Boolean,
     required: true
@@ -43,17 +46,19 @@ const NuzlockePokemonSchema: Schema = new Schema({
   },
   inTeam: {
     type: Boolean,
-    required: true,
+    required: true
   },
   level: {
     type: Number,
     default: 1
   },
-  moves: [{
-    type: Number,
-    ref: 'move'
-  }]
-})
+  moves: [
+    {
+      type: Number,
+      ref: 'move'
+    }
+  ]
+});
 
 const NuzlockeSchema: Schema = new Schema({
   type: {
@@ -73,9 +78,11 @@ const NuzlockeSchema: Schema = new Schema({
   name: {
     type: String
   },
-  pokemons: [{
-    type: NuzlockePokemonSchema
-  }],
+  pokemons: [
+    {
+      type: NuzlockePokemonSchema
+    }
+  ],
   score: {
     type: Number,
     default: 0

@@ -44,6 +44,7 @@ const NuzlockeSchema = gql`
 
   input NuzlockePokemonInput {
     pokemon: Int!
+    partner: Int
     location: String!
     isCaptured: Boolean!
     nickname: String
@@ -54,14 +55,14 @@ const NuzlockeSchema = gql`
   }
 
   extend type Query {
-    getNuzlocke(id:ID!): Nuzlocke
+    getNuzlocke(id: ID!): Nuzlocke
     getNuzlockes(userId: ID): Nuzlocke
   }
-  
+
   extend type Mutation {
     createNuzlocke(input: NuzlockeInput!): Nuzlocke
-    addPokemon(id: ID! pokemon: NuzlockePokemonInput!): Nuzlocke
+    addPokemon(id: ID!, pokemon: NuzlockePokemonInput!): Nuzlocke
   }
-`
+`;
 
 export default NuzlockeSchema;
