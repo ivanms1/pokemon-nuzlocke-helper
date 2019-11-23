@@ -63,7 +63,7 @@ const Nuzlocke = () => {
         <span>{getType(nuzlocke.type)}</span>
       </div>
       <div className={styles.Pokemons}>
-        <Team pokemons={team} />
+        <Team pokemons={team} nuzlockeType={nuzlocke.type} />
         <InPc pokemons={inPc} />
         <Dead pokemons={deadMons} />
         <Encounters pokemons={nuzlocke.pokemons} />

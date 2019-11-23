@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 const PokemonSchema = gql`
   type Pokemon {
@@ -21,8 +21,8 @@ const PokemonSchema = gql`
 
   extend type Query {
     getPokemons: [Pokemon]
-    getPokemon(id:Int!): Pokemon
+    getPokemon(id: Int!): Pokemon
   }
-`
+`;
 
 export default PokemonSchema;

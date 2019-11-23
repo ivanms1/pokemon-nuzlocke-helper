@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 const GameSchema = gql`
   type Game {
@@ -12,6 +12,6 @@ const GameSchema = gql`
     getGames: [Game]
     getGame(id: Int!): Game
   }
-`
+`;
 
 export default GameSchema;

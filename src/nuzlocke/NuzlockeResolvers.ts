@@ -10,7 +10,10 @@ const NuzlockeResolvers = {
         .populate({ path: 'pokemons', populate: { path: 'pokemon' } })
         .populate({ path: 'pokemons.partner', model: 'pokemon' });
     },
-    getNuzlocke: async (_: any, { id }: any) => {
+    getNuzlocke: async (_: any, { id }: any, { isAuth }: any) => {
+      if (!isAuth) {
+        throw Error('Not Authorized');
+      }
       return await Nuzlocke.findById(id)
         .populate('user')
         .populate({ path: 'game', populate: { path: 'region' } })

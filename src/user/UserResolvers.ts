@@ -1,10 +1,10 @@
 import User from './UserModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
-require('dotenv').config();
+import { createRefreshToken, createAccessToken } from './auth';
 
 const jwtKey = process.env.JWT_KEY;
+const cookieKey = process.env.COOKIE_KEY;
 
 const UserResolvers = {
   Query: {
@@ -22,7 +22,7 @@ const UserResolvers = {
     }
   },
   Mutation: {
-    signUp: async (_: any, { input }: any) => {
+    signUp: async (_: any, { input }: any, { res }: any) => {
       const { email } = input;
       const user = await User.findOne({ email });
 
@@ -33,16 +33,11 @@ const UserResolvers = {
 
       const newUser = await User.create(input);
 
-      const token = jwt.sign(
-        {
-          userId: newUser.id,
-          email: newUser.email
-        },
-        jwtKey,
-        {
-          expiresIn: '3h'
-        }
-      );
+      const token = createAccessToken(newUser);
+
+      res.cookie('nuzlocke-helper', createRefreshToken(newUser), {
+        httpOnly: true
+      });
 
       return {
         userId: newUser.id,
@@ -50,7 +45,7 @@ const UserResolvers = {
         tokenExpiration: 3
       };
     },
-    login: async (_: any, { input }: any) => {
+    login: async (_: any, { input }: any, { res }: any) => {
       const { password } = input;
 
       const user = await User.findOne({ email: input.email });
@@ -65,16 +60,11 @@ const UserResolvers = {
         throw new Error('Invalid credentials');
       }
 
-      const token = jwt.sign(
-        {
-          userId: user.id,
-          email: user.email
-        },
-        jwtKey,
-        {
-          expiresIn: '3h'
-        }
-      );
+      const token = createAccessToken(user);
+
+      res.cookie('nuzlocke-helper', createRefreshToken(user), {
+        httpOnly: true
+      });
 
       return {
         userId: user.id,

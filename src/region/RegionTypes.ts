@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 const RegionSchema = gql`
   type Region {
@@ -9,8 +9,8 @@ const RegionSchema = gql`
 
   type Query {
     getRegions: [Region]
-    getRegion(id:Int!): Region
+    getRegion(id: Int!): Region
   }
-`
+`;
 
 export default RegionSchema;

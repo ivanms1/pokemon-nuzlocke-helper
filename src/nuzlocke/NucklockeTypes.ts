@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 const NuzlockeSchema = gql`
   enum NuzlockeType {
@@ -27,6 +27,7 @@ const NuzlockeSchema = gql`
   type NuzlockePokemon {
     _id: ID!
     pokemon: Pokemon
+    partner: Pokemon
     location: String
     isCaptured: Boolean
     inTeam: Boolean

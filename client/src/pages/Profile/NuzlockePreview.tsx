@@ -26,7 +26,6 @@ interface NuzlockePreviewProps {
 
 const NuzlockePreview = ({ nuzlocke }: NuzlockePreviewProps) => {
   const team = nuzlocke.pokemons.filter(pok => pok.inTeam);
-  console.log(team);
   return (
     <Link to={`/nuzlocke/${nuzlocke._id}`}>
       <div className={styles.NuzlockePreview}>
