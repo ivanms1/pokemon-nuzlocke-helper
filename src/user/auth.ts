@@ -1,5 +1,7 @@
 import { IUser } from './UserModel';
 import { sign } from 'jsonwebtoken';
+import { Response } from 'express';
+
 import 'dotenv/config';
 
 const jwtKey = process.env.JWT_KEY;
@@ -28,4 +30,8 @@ export const createRefreshToken = (user: IUser) => {
       expiresIn: '7d'
     }
   );
+};
+
+export const sendRefreshToken = (res: Response, token: string) => {
+  res.cookie('nuzlocke-helper', token, { httpOnly: true });
 };

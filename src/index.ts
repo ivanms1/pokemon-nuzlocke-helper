@@ -1,18 +1,21 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
+import { verify } from 'jsonwebtoken';
 import 'dotenv/config';
 
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 import isAuth from './isAuth';
+import User from './user/UserModel';
+import {
+  createRefreshToken,
+  createAccessToken,
+  sendRefreshToken
+} from './user/auth';
 
 const uri = process.env.DATABASE_URI;
-
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: false
-};
 
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -34,7 +37,40 @@ const server = new ApolloServer({
 
 const app = express();
 
-server.applyMiddleware({ app });
+app.use(cookieParser());
+
+app.post('/refresh-token', async (req, res) => {
+  const token = req.cookies['nuzlocke-helper'];
+  if (!token) {
+    return res.send({ ok: false, accessToken: '' });
+  }
+
+  let payload: any = null;
+  try {
+    payload = verify(token, process.env.COOKIE_KEY);
+  } catch (error) {
+    console.log(error);
+    return res.send({ ok: false, accessToken: '' });
+  }
+
+  const user = await User.findById(payload.userId);
+
+  if (!user) {
+    return res.send({ ok: false, accessToken: '' });
+  }
+
+  sendRefreshToken(res, createRefreshToken(user));
+
+  return res.send({ ok: true, accessToken: createAccessToken(user) });
+});
+
+server.applyMiddleware({
+  app,
+  cors: {
+    origin: 'http://localhost:3000',
+    credentials: true
+  }
+});
 
 app.listen({ port: 4000 }, () =>
   console.log(`🚀  Server ready at http://localhost:4000${server.graphqlPath}`)

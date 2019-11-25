@@ -1,7 +1,11 @@
 import User from './UserModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { createRefreshToken, createAccessToken } from './auth';
+import {
+  createRefreshToken,
+  createAccessToken,
+  sendRefreshToken
+} from './auth';
 
 const jwtKey = process.env.JWT_KEY;
 const cookieKey = process.env.COOKIE_KEY;
@@ -35,9 +39,7 @@ const UserResolvers = {
 
       const token = createAccessToken(newUser);
 
-      res.cookie('nuzlocke-helper', createRefreshToken(newUser), {
-        httpOnly: true
-      });
+      sendRefreshToken(res, createRefreshToken(newUser));
 
       return {
         userId: newUser.id,
