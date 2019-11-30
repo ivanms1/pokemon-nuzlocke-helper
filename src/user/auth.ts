@@ -15,7 +15,7 @@ export const createAccessToken = (user: IUser) => {
     },
     jwtKey,
     {
-      expiresIn: '15s'
+      expiresIn: '15m'
     }
   );
 };
