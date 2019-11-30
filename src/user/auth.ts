@@ -15,7 +15,7 @@ export const createAccessToken = (user: IUser) => {
     },
     jwtKey,
     {
-      expiresIn: '15m'
+      expiresIn: '15s'
     }
   );
 };
@@ -33,5 +33,8 @@ export const createRefreshToken = (user: IUser) => {
 };
 
 export const sendRefreshToken = (res: Response, token: string) => {
-  res.cookie('nuzlocke-helper', token, { httpOnly: true });
+  res.cookie('nuzlocke-helper', token, {
+    httpOnly: true,
+    path: '/refresh-token'
+  });
 };

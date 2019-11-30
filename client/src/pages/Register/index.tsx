@@ -8,6 +8,8 @@ import * as yup from 'yup';
 
 import CustomInput from '../../components/Formik/CustomInput';
 
+import { setAccessToken } from '../../accessToken';
+
 import styles from './Register.module.css';
 
 const MUTATION_SIGNUP = loader('./mutationSignUp.graphql');
@@ -64,6 +66,7 @@ const Register = () => {
           }).catch(err => setAlert(true));
 
           if (response) {
+            setAccessToken(response.data.signUp.token);
             history.push(`/profile/${response.data.signUp.userId}`);
           }
         }}

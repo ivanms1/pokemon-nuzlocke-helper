@@ -5,9 +5,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Nuzlocke from './pages/Nuzlocke';
-
-import './App.css';
 import Register from './pages/Register';
+import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 
 const App: React.FC = () => {
   return (
@@ -22,12 +21,12 @@ const App: React.FC = () => {
         <Route path='/login'>
           <Login />
         </Route>
-        <Route path='/profile/:userId'>
+        <AuthenticatedRoute path='/profile/:userId'>
           <Profile />
-        </Route>
-        <Route path='/nuzlocke/:nuzlockeId'>
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path='/nuzlocke/:nuzlockeId'>
           <Nuzlocke />
-        </Route>
+        </AuthenticatedRoute>
       </Switch>
     </Router>
   );

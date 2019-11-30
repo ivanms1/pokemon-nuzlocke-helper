@@ -7,9 +7,6 @@ import {
   sendRefreshToken
 } from './auth';
 
-const jwtKey = process.env.JWT_KEY;
-const cookieKey = process.env.COOKIE_KEY;
-
 const UserResolvers = {
   Query: {
     getUser: async (_: any, { userId }: any) => {

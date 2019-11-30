@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { verify } from 'jsonwebtoken';
 import 'dotenv/config';
 
@@ -38,6 +39,12 @@ const server = new ApolloServer({
 const app = express();
 
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+  })
+);
 
 app.post('/refresh-token', async (req, res) => {
   const token = req.cookies['nuzlocke-helper'];
@@ -66,10 +73,7 @@ app.post('/refresh-token', async (req, res) => {
 
 server.applyMiddleware({
   app,
-  cors: {
-    origin: 'http://localhost:3000',
-    credentials: true
-  }
+  cors: false
 });
 
 app.listen({ port: 4000 }, () =>

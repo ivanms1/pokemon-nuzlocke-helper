@@ -3,7 +3,7 @@ import User from '../user/UserModel';
 
 const NuzlockeResolvers = {
   Query: {
-    getNuzlockes: async (_: any, { userId }: any) => {
+    getNuzlockes: async (_: any, { userId }: any, { isAuth }: any) => {
       return await Nuzlocke.find({ user: userId })
         .populate('user')
         .populate({ path: 'game', populate: { path: 'region' } })
@@ -22,7 +22,10 @@ const NuzlockeResolvers = {
     }
   },
   Mutation: {
-    createNuzlocke: async (_: any, { input }: any) => {
+    createNuzlocke: async (_: any, { input }: any, { isAuth }: any) => {
+      if (!isAuth) {
+        throw Error('Not Authorized');
+      }
       const nuzlocke = await Nuzlocke.create(input);
       await User.findByIdAndUpdate(input.user, {
         $push: { nuzlockes: nuzlocke._id }
@@ -31,7 +34,10 @@ const NuzlockeResolvers = {
         .populate({ path: 'game', populate: { path: 'region' } })
         .execPopulate();
     },
-    addPokemon: async (_: any, { id, pokemon }: any) => {
+    addPokemon: async (_: any, { id, pokemon }: any, { isAuth }: any) => {
+      if (!isAuth) {
+        throw Error('Not Authorized');
+      }
       const updatedNuzlocke = await Nuzlocke.findByIdAndUpdate(
         id,
         { $push: { pokemons: pokemon } },

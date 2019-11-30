@@ -1,45 +1,48 @@
-import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
-import { useHistory, Link } from "react-router-dom";
-import { useMutation } from "@apollo/react-hooks";
-import { Button, Intent, Toaster, Toast } from "@blueprintjs/core";
-import { loader } from "graphql.macro";
-import * as yup from "yup";
+import React, { useState, useContext } from 'react';
+import { Formik, Form, Field } from 'formik';
+import { useHistory, Link } from 'react-router-dom';
+import { useMutation } from '@apollo/react-hooks';
+import { Button, Intent, Toaster, Toast } from '@blueprintjs/core';
+import { loader } from 'graphql.macro';
+import * as yup from 'yup';
 
-import CustomInput from "../../components/Formik/CustomInput";
+import CustomInput from '../../components/Formik/CustomInput';
+import Context from '../../components/AppContext';
 
-import styles from "./Login.module.css";
+import styles from './Login.module.css';
 
-const MUTATION_LOGIN = loader("./mutationLogin.graphql");
+const MUTATION_LOGIN = loader('./mutationLogin.graphql');
 
 const Login = () => {
   const [alert, setAlert] = useState(false);
 
+  const { onLogin } = useContext(Context);
+
   const [login, { loading }] = useMutation(MUTATION_LOGIN, {
-    errorPolicy: "all"
+    errorPolicy: 'all'
   });
   const history = useHistory();
 
   const emailIcon = (
-    <Button icon="envelope" intent={Intent.WARNING} minimal={true} />
+    <Button icon='envelope' intent={Intent.WARNING} minimal={true} />
   );
 
   return (
     <div className={styles.LoginPage}>
       <Formik
         initialValues={{
-          email: "",
-          password: ""
+          email: '',
+          password: ''
         }}
         validationSchema={yup.object().shape({
           email: yup
             .string()
             .required()
-            .label("this"),
+            .label('this'),
           password: yup
             .string()
             .required()
-            .label("this")
+            .label('this')
         })}
         onSubmit={async values => {
           const response = await login({
@@ -49,6 +52,7 @@ const Login = () => {
           }).catch(err => setAlert(true));
 
           if (response) {
+            onLogin(response.data.login.token);
             history.push(`/profile/${response.data.login.userId}`);
           }
         }}
@@ -57,33 +61,33 @@ const Login = () => {
           <Form className={styles.LoginForm}>
             <h1>Login</h1>
             <Field
-              name="email"
-              placeholder="email"
+              name='email'
+              placeholder='email'
               rightElement={emailIcon}
               component={CustomInput}
             />
             <Field
-              name="password"
-              type="password"
-              placeholder="password"
+              name='password'
+              type='password'
+              placeholder='password'
               component={CustomInput}
             />
-            <Button loading={loading} type="submit">
+            <Button loading={loading} type='submit'>
               Submit
             </Button>
           </Form>
         )}
       </Formik>
       {alert && (
-        <Toaster position="top">
+        <Toaster position='top'>
           <Toast
-            intent="danger"
-            message="An error has occurred"
+            intent='danger'
+            message='An error has occurred'
             onDismiss={() => setAlert(false)}
           />
         </Toaster>
       )}
-      <Link to="/register">Don't have an account?</Link>
+      <Link to='/register'>Don't have an account?</Link>
     </div>
   );
 };
