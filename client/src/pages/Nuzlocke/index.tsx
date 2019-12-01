@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { loader } from 'graphql.macro';
 import { useQuery } from '@apollo/react-hooks';
 import { ProgressBar, Button } from '@blueprintjs/core';
+import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import { ADD } from '@blueprintjs/icons/lib/esm/generated/iconNames';
 
 import AddNewPokemon from './AddNewPokemon';
@@ -44,6 +45,10 @@ const Nuzlocke = () => {
 
   const { nuzlocke } = data;
 
+  const onDragEnd: OnDragEndResponder = result => {
+    console.log(result);
+  };
+
   const team = nuzlocke.pokemons.filter(
     (pok: { inTeam: boolean }) => pok.inTeam
   );
@@ -63,10 +68,12 @@ const Nuzlocke = () => {
         <span>{getType(nuzlocke.type)}</span>
       </div>
       <div className={styles.Pokemons}>
-        <Team pokemons={team} nuzlockeType={nuzlocke.type} />
-        <InPc pokemons={inPc} />
-        <Dead pokemons={deadMons} />
-        <Encounters pokemons={nuzlocke.pokemons} />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Team pokemons={team} nuzlockeType={nuzlocke.type} />
+          <InPc pokemons={inPc} />
+          <Dead pokemons={deadMons} />
+          <Encounters pokemons={nuzlocke.pokemons} />
+        </DragDropContext>
       </div>
       <Button
         icon={ADD}
