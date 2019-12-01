@@ -26,7 +26,8 @@ const UserSchema = gql`
   }
 
   extend type Query {
-    getUser(userId: ID): User
+    getUser(userId: ID!): User
+    getCurrentUser: User
   }
 
   type Mutation {
@@ -34,6 +35,6 @@ const UserSchema = gql`
     login(input: LoginInput!): LoginToken
     updateUser(input: SignUpInput!): User
   }
-`
+`;
 
 export default UserSchema;

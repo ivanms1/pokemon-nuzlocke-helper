@@ -20,6 +20,9 @@ const UserResolvers = {
             { path: 'pokemons.partner', model: 'pokemon' }
           ]
         });
+    },
+    getCurrentUser: async (_: any, args: any, { userId }: any) => {
+      return await User.findById(userId);
     }
   },
   Mutation: {
