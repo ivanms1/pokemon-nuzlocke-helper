@@ -17,10 +17,8 @@ query GetUser($userId: ID!) {
           image
         }
         location
-        isCaptured
         nickname
         status
-        inTeam
         level
       }
     }

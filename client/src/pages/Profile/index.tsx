@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { useParams } from "react-router";
-import { useQuery } from "@apollo/react-hooks";
-import { loader } from "graphql.macro";
-import { Button, ProgressBar } from "@blueprintjs/core";
+import React, { useState } from 'react';
+import { useParams } from 'react-router';
+import { useQuery } from '@apollo/react-hooks';
+import { loader } from 'graphql.macro';
+import { Button, ProgressBar } from '@blueprintjs/core';
 
-import NuzlockePreview from "./NuzlockePreview";
-import AddNuzlockeDrawer from "./AddNuzlockeDrawer";
+import NuzlockePreview from './NuzlockePreview';
+import AddNuzlockeDrawer from './AddNuzlockeDrawer';
 
-import { ADD } from "@blueprintjs/icons/lib/esm/generated/iconNames";
+import { ADD } from '@blueprintjs/icons/lib/esm/generated/iconNames';
 
-import styles from "./Profile.module.css";
+import styles from './Profile.module.css';
 
-const QUERY_GET_USER = loader("./queryGetUser.graphql");
+const QUERY_GET_USER = loader('./queryGetUser.graphql');
 
 interface GetUserData {
   user: {
@@ -26,8 +26,8 @@ interface GetUserData {
       };
       pokemons: {
         _id: number;
-        inTeam: boolean;
         nickname: string;
+        status: string;
         pokemon: {
           _id: string;
           name: string;

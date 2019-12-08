@@ -48,6 +48,21 @@ const NuzlockeResolvers = {
         .populate({ path: 'pokemons.partner', model: 'pokemon' });
 
       return updatedNuzlocke;
+    },
+    updatePokemon: async (_: any, { id, pokemon }: any, { isAuth }: any) => {
+      if (!isAuth) {
+        throw Error('Not Authorized');
+      }
+      const updatedNuzlocke = await Nuzlocke.findOneAndUpdate(
+        { _id: id, 'pokemons._id': pokemon.id },
+        { $set: { 'pokemons.$': pokemon } },
+        { new: true }
+      )
+        .populate({ path: 'game', populate: { path: 'region' } })
+        .populate({ path: 'pokemons.pokemon', model: 'pokemon' })
+        .populate({ path: 'pokemons.partner', model: 'pokemon' });
+
+      return updatedNuzlocke;
     }
   }
 };

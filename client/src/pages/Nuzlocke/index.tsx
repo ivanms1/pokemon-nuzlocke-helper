@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { loader } from 'graphql.macro';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { ProgressBar, Button } from '@blueprintjs/core';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import { ADD } from '@blueprintjs/icons/lib/esm/generated/iconNames';
@@ -15,6 +15,9 @@ import styles from './Nuzlocke.module.css';
 import Encounters from './Encounters';
 
 const QUERY_GET_NUZLOCKE = loader('./queryGetNuzlocke.graphql');
+const MUTATION_UPDATE_POKEMON_STATUS = loader(
+  './mutationUpdatePokemonStatus.graphql'
+);
 
 const getType = (type: string) => {
   switch (type) {
@@ -39,22 +42,68 @@ const Nuzlocke = () => {
     }
   });
 
+  const [updatePokemonStatus] = useMutation(MUTATION_UPDATE_POKEMON_STATUS);
+
   if (loading || !data) {
     return <ProgressBar />;
   }
 
   const { nuzlocke } = data;
 
-  const onDragEnd: OnDragEndResponder = result => {
-    console.log(result);
+  const onDragEnd: OnDragEndResponder = async result => {
+    const { draggableId, destination } = result;
+
+    if (!draggableId || !destination) {
+      return;
+    }
+
+    const {
+      pokemon,
+      partner,
+      _id,
+      status,
+      __typename,
+      ...pokemonToUpdate
+    } = nuzlocke.pokemons.find((pokemon: any) => pokemon._id === draggableId);
+
+    await updatePokemonStatus({
+      variables: {
+        id: nuzlocke._id,
+        pokemon: {
+          id: _id,
+          pokemon: pokemon._id,
+          partner: partner ? partner._id : null,
+          status: destination.droppableId,
+          ...pokemonToUpdate
+        }
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        updatePokemon: {
+          ...nuzlocke,
+          pokemons: [
+            ...nuzlocke.pokemons.filter(
+              (pok: { _id: string }) => pok._id !== _id
+            ),
+            {
+              _id,
+              pokemon,
+              partner,
+              __typename,
+              status: destination.droppableId,
+              ...pokemonToUpdate
+            }
+          ]
+        }
+      }
+    });
   };
 
   const team = nuzlocke.pokemons.filter(
-    (pok: { inTeam: boolean }) => pok.inTeam
+    (pok: { status: string }) => pok.status === 'IN_TEAM'
   );
   const inPc = nuzlocke.pokemons.filter(
-    (pok: { inTeam: boolean; status: string }) =>
-      !pok.inTeam && pok.status !== 'DEAD'
+    (pok: { status: string }) => pok.status === 'IN_PC'
   );
   const deadMons = nuzlocke.pokemons.filter(
     (pok: { status: string }) => pok.status === 'DEAD'

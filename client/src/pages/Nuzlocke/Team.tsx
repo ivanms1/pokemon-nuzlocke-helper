@@ -19,7 +19,7 @@ interface TeamProps {
 
 const Team = ({ pokemons, nuzlockeType }: TeamProps) => {
   return (
-    <Droppable droppableId='team'>
+    <Droppable droppableId='IN_TEAM'>
       {provided => (
         <div
           className={styles.Team}

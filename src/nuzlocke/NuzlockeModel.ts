@@ -7,14 +7,11 @@ export interface INuzlocke extends Document {
   pokemons: {
     pokemon: number;
     location: string;
-    isCaptured: boolean;
-    inTeam: boolean;
     nickname: string;
     status: string;
     level: number;
     moves: number[];
   }[];
-  inTeam: boolean;
   score: number;
   deaths: number;
 }
@@ -32,20 +29,12 @@ const NuzlockePokemonSchema: Schema = new Schema({
     type: Number,
     ref: 'pokemon'
   },
-  isCaptured: {
-    type: Boolean,
-    required: true
-  },
   nickname: {
     type: String
   },
   status: {
     type: String,
-    enum: ['ALIVE', 'DEAD', 'SEEN'],
-    required: true
-  },
-  inTeam: {
-    type: Boolean,
+    enum: ['IN_TEAM', 'IN_PC', 'DEAD', 'SEEN'],
     required: true
   },
   level: {

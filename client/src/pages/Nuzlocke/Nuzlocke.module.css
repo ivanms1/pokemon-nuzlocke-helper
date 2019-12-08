@@ -45,19 +45,44 @@
 }
 
 .AddNewPokemon {
+  width: 350px !important;
 }
 
 .AddNewPokemonContainer {
-  padding: 1rem;
+  padding: 1rem 2rem;
+}
+
+.AddNewPokemonForm {
+  display: flex;
+  flex-direction: column;
 }
 
 .LocationFields {
   display: flex;
-  align-items: center;
+}
+
+.CustomLocationInput {
+  max-width: 10rem;
 }
 
 .LocationCheckbox {
-  margin-left: 0.5rem;
+  margin: 15px 0 0 0 !important;
+  min-width: 10rem;
+}
+
+.LocationCheckbox > div > label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.NicknameInput {
+  max-width: 10rem;
+}
+
+.SubmitButton {
+  max-height: 3rem;
+  max-width: 10rem;
 }
 
 .Encounter {

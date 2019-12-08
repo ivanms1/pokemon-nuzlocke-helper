@@ -13,8 +13,8 @@ interface NuzlockePreviewProps {
     };
     pokemons: {
       _id: number;
-      inTeam: boolean;
       nickname: string;
+      status: string;
       pokemon: {
         _id: string;
         name: string;
@@ -25,7 +25,7 @@ interface NuzlockePreviewProps {
 }
 
 const NuzlockePreview = ({ nuzlocke }: NuzlockePreviewProps) => {
-  const team = nuzlocke.pokemons.filter(pok => pok.inTeam);
+  const team = nuzlocke.pokemons.filter(pok => pok.status === 'IN_TEAM');
   return (
     <Link to={`/nuzlocke/${nuzlocke._id}`}>
       <div className={styles.NuzlockePreview}>

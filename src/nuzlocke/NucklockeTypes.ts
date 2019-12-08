@@ -8,7 +8,8 @@ const NuzlockeSchema = gql`
   }
 
   enum StatusType {
-    ALIVE
+    IN_TEAM
+    IN_PC
     DEAD
     SEEN
   }
@@ -29,8 +30,6 @@ const NuzlockeSchema = gql`
     pokemon: Pokemon
     partner: Pokemon
     location: String
-    isCaptured: Boolean
-    inTeam: Boolean
     nickname: String
     status: String
     level: Int
@@ -44,12 +43,11 @@ const NuzlockeSchema = gql`
   }
 
   input NuzlockePokemonInput {
+    id: ID
     pokemon: Int!
     partner: Int
     location: String!
-    isCaptured: Boolean!
     nickname: String
-    inTeam: Boolean
     status: StatusType!
     level: Int
     moves: [Int!]
@@ -63,6 +61,7 @@ const NuzlockeSchema = gql`
   extend type Mutation {
     createNuzlocke(input: NuzlockeInput!): Nuzlocke
     addPokemon(id: ID!, pokemon: NuzlockePokemonInput!): Nuzlocke
+    updatePokemon(id: ID!, pokemon: NuzlockePokemonInput!): Nuzlocke
   }
 `;
 

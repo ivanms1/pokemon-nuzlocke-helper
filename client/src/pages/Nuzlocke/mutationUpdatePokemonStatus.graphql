@@ -1,5 +1,5 @@
-mutation AddPokemon($id: ID!, $pokemon: NuzlockePokemonInput!) {
-  addPokemon(id: $id, pokemon: $pokemon) {
+mutation UpdatePokemonStatus($id: ID!, $pokemon: NuzlockePokemonInput!) {
+  updatePokemon(id: $id, pokemon: $pokemon) {
     _id
     pokemons {
       _id

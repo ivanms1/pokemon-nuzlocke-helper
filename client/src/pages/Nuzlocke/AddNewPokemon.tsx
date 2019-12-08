@@ -81,13 +81,16 @@ const AddNewPokemon = ({
             customLocation: '',
             pokemon: '',
             partner: '',
-            isCaptured: false,
-            inTeam: false,
             nickname: '',
+            status: '',
             isLocationCustom: false
           }}
           validationSchema={yup.object().shape({
             pokemon: yup
+              .string()
+              .required()
+              .label('This'),
+            status: yup
               .string()
               .required()
               .label('This')
@@ -104,7 +107,6 @@ const AddNewPokemon = ({
                 pokemon: {
                   ...values,
                   location: isLocationCustom ? customLocation : location,
-                  status: values.isCaptured ? 'ALIVE' : 'SEEN',
                   partner: nuzlocke.type === 'SOUL_LINK' ? values.partner : null
                 }
               }
@@ -115,24 +117,11 @@ const AddNewPokemon = ({
         >
           {({ values }) => (
             <Form>
-              <Field
-                id='pokemon'
-                name='pokemon'
-                label='Select a Pokemon'
-                component={CustomSelect}
-                initialContent={null}
-                placeholder='Search Pokemon'
-                options={pokemons.map(pokemon => ({
-                  value: pokemon._id,
-                  label: pokemon.name,
-                  icon: pokemon.sprite
-                }))}
-              />
-              {nuzlocke.type === 'SOUL_LINK' && (
+              <div className={styles.AddNewPokemonForm}>
                 <Field
-                  id='partner'
-                  name='partner'
-                  label='Select a soulink partner'
+                  id='pokemon'
+                  name='pokemon'
+                  label='Select a Pokemon'
                   component={CustomSelect}
                   initialContent={null}
                   placeholder='Search Pokemon'
@@ -142,72 +131,98 @@ const AddNewPokemon = ({
                     icon: pokemon.sprite
                   }))}
                 />
-              )}
-              <div className={styles.LocationFields}>
-                {values.isLocationCustom ? (
+                {nuzlocke.type === 'SOUL_LINK' && (
                   <Field
-                    id='customLocation'
-                    name='customLocation'
-                    label='Enter Custom Location'
-                    component={CustomInput}
-                    placeholder='Input Location'
-                  />
-                ) : (
-                  <Field
-                    id='location'
-                    name='location'
-                    label='Select a Location'
+                    id='partner'
+                    name='partner'
+                    label='Select a soulink partner'
                     component={CustomSelect}
                     initialContent={null}
-                    placeholder='Search Location'
-                    options={region.locations.map(location => ({
-                      label: location.replace(/-/g, ' '),
-                      value: location
+                    placeholder='Search Pokemon'
+                    options={pokemons.map(pokemon => ({
+                      value: pokemon._id,
+                      label: pokemon.name,
+                      icon: pokemon.sprite
                     }))}
                   />
                 )}
+                <div className={styles.LocationFields}>
+                  {values.isLocationCustom ? (
+                    <Field
+                      id='customLocation'
+                      name='customLocation'
+                      className={styles.CustomLocationInput}
+                      label='Enter Location'
+                      component={CustomInput}
+                      placeholder='Input Location'
+                    />
+                  ) : (
+                    <Field
+                      id='location'
+                      name='location'
+                      label='Select a Location'
+                      component={CustomSelect}
+                      initialContent={null}
+                      placeholder='Search'
+                      options={region.locations.map(location => ({
+                        label: location.replace(/-/g, ' '),
+                        value: location
+                      }))}
+                    />
+                  )}
+                  <Field
+                    id='isLocationCustom'
+                    className={styles.LocationCheckbox}
+                    checkboxLabel='Custom Location'
+                    name='isLocationCustom'
+                    type='checkbox'
+                    component={CustomInput}
+                  />
+                </div>
                 <Field
-                  id='isLocationCustom'
-                  label='&nbsp;'
-                  className={styles.LocationCheckbox}
-                  checkboxLabel='Custom Location'
-                  name='isLocationCustom'
-                  type='checkbox'
-                  component={CustomInput}
+                  id='status'
+                  name='status'
+                  component={CustomSelect}
+                  label='Status'
+                  placeholder='Select a Status'
+                  options={[
+                    {
+                      value: 'IN_TEAM',
+                      label: 'in team'
+                    },
+                    {
+                      value: 'IN_PC',
+                      label: 'in pc'
+                    },
+                    {
+                      value: 'SEEN',
+                      label: 'seen'
+                    },
+                    {
+                      value: 'DEAD',
+                      label: 'Dead'
+                    }
+                  ]}
                 />
-              </div>
-              <Field
-                id='isCaptured'
-                name='isCaptured'
-                checkboxLabel='pokemon was captured'
-                type='checkbox'
-                component={CustomInput}
-              />
-              {values.isCaptured ? (
-                <React.Fragment>
+                {(values.status === 'IN_TEAM' || values.status === 'IN_PC') && (
                   <Field
                     id='nickname'
                     name='nickname'
+                    className={styles.NicknameInput}
                     label='Enter Pokemon nickname'
                     component={CustomInput}
                     placeholder='Pebbles'
                   />
-                  <Field
-                    id='inTeam'
-                    name='inTeam'
-                    checkboxLabel='add to team'
-                    type='checkbox'
-                    component={CustomInput}
-                  />
-                  <Button type='submit' loading={addLoading}>
-                    Add Pokemon
-                  </Button>
-                </React.Fragment>
-              ) : (
-                <Button icon={ADD} type='submit' loading={addLoading}>
-                  Add Encounter
-                </Button>
-              )}
+                )}
+              </div>
+              <Button
+                className={styles.SubmitButton}
+                icon={ADD}
+                type='submit'
+                loading={addLoading}
+              >
+                Add
+              </Button>
             </Form>
           )}
         </Formik>

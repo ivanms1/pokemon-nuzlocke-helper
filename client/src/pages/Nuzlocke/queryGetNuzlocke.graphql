@@ -26,10 +26,8 @@ query GetNuzlocke($id: ID!) {
         image
       }
       location
-      isCaptured
       nickname
       status
-      inTeam
       level
     }
     score

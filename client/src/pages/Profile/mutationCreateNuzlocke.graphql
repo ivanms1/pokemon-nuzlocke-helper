@@ -14,10 +14,8 @@ mutation CreateNuzlocke($input: NuzlockeInput!) {
         image
       }
       location
-      isCaptured
       nickname
       status
-      inTeam
       level
     }
   }

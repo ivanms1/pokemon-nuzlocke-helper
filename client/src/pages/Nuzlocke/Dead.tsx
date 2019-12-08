@@ -16,7 +16,7 @@ interface DeadProps {
 
 function Dead({ pokemons }: DeadProps) {
   return (
-    <Droppable droppableId='dead'>
+    <Droppable droppableId='DEAD'>
       {provided => (
         <div ref={provided.innerRef} {...provided.droppableProps}>
           <h2>RIP</h2>

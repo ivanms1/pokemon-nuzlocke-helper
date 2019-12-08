@@ -18,7 +18,7 @@ interface InPcProps {
 
 function InPc({ pokemons }: InPcProps) {
   return (
-    <Droppable droppableId='pc'>
+    <Droppable droppableId='IN_PC'>
       {provided => (
         <div
           className={styles.InPc}
