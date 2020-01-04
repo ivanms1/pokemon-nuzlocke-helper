@@ -13,6 +13,7 @@ import Dead from './Dead';
 
 import styles from './Nuzlocke.module.css';
 import Encounters from './Encounters';
+import PokemonDrawer from './PokemonDrawer';
 
 const QUERY_GET_NUZLOCKE = loader('./queryGetNuzlocke.graphql');
 const MUTATION_UPDATE_POKEMON_STATUS = loader(
@@ -34,6 +35,13 @@ const getType = (type: string) => {
 
 const Nuzlocke = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [selectedPokemon, setSelectedPokemon] = useState<{
+    isOpen: boolean;
+    pokemon: any;
+  }>({
+    isOpen: false,
+    pokemon: null
+  });
   const { nuzlockeId } = useParams();
 
   const { data, loading } = useQuery(QUERY_GET_NUZLOCKE, {
@@ -118,12 +126,16 @@ const Nuzlocke = () => {
       </div>
       <div className={styles.Pokemons}>
         <DragDropContext onDragEnd={onDragEnd}>
-          <Team pokemons={team} nuzlockeType={nuzlocke.type} />
-          <InPc pokemons={inPc} />
-          <Dead pokemons={deadMons} />
-          <Encounters pokemons={nuzlocke.pokemons} />
+          <Team
+            pokemons={team}
+            nuzlockeType={nuzlocke.type}
+            selectPokemon={setSelectedPokemon}
+          />
+          <InPc pokemons={inPc} selectPokemon={setSelectedPokemon} />
+          <Dead pokemons={deadMons} selectPokemon={setSelectedPokemon} />
         </DragDropContext>
       </div>
+      <Encounters pokemons={nuzlocke.pokemons} />
       <Button
         icon={ADD}
         intent='primary'
@@ -137,6 +149,11 @@ const Nuzlocke = () => {
         onClose={() => setIsAddModalOpen(false)}
         regionId={nuzlocke.game.region.id}
         nuzlocke={nuzlocke}
+      />
+      <PokemonDrawer
+        isOpen={selectedPokemon.isOpen}
+        pokemon={selectedPokemon.pokemon}
+        onClose={() => setSelectedPokemon({ isOpen: false, pokemon: null })}
       />
     </div>
   );

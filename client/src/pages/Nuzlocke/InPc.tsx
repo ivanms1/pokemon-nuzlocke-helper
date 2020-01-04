@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Position, Tooltip } from '@blueprintjs/core';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -14,9 +14,15 @@ interface InPcProps {
       image: string;
     };
   }[];
+  selectPokemon: Dispatch<
+    SetStateAction<{
+      isOpen: boolean;
+      pokemon: null;
+    }>
+  >;
 }
 
-function InPc({ pokemons }: InPcProps) {
+function InPc({ pokemons, selectPokemon }: InPcProps) {
   return (
     <Droppable droppableId='IN_PC'>
       {provided => (
@@ -42,6 +48,12 @@ function InPc({ pokemons }: InPcProps) {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
+                        onClick={() =>
+                          selectPokemon({
+                            isOpen: true,
+                            pokemon
+                          })
+                        }
                       >
                         <img
                           src={pokemon.pokemon.sprite}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Position, Tooltip } from '@blueprintjs/core';
 
 import styles from './Nuzlocke.module.css';
@@ -15,9 +15,15 @@ interface TeamProps {
     };
   }[];
   nuzlockeType: string;
+  selectPokemon: Dispatch<
+    SetStateAction<{
+      isOpen: boolean;
+      pokemon: null;
+    }>
+  >;
 }
 
-const Team = ({ pokemons, nuzlockeType }: TeamProps) => {
+const Team = ({ pokemons, nuzlockeType, selectPokemon }: TeamProps) => {
   return (
     <Droppable droppableId='IN_TEAM'>
       {provided => (
@@ -55,6 +61,12 @@ const Team = ({ pokemons, nuzlockeType }: TeamProps) => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
+                        onClick={() =>
+                          selectPokemon({
+                            isOpen: true,
+                            pokemon
+                          })
+                        }
                       >
                         <img
                           src={pokemon.pokemon.image}

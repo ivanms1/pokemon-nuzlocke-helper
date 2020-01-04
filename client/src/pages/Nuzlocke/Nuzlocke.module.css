@@ -89,3 +89,11 @@
   display: flex;
   align-items: center;
 }
+
+.EditPokemonForm {
+  padding: 2rem;
+}
+
+.EditPokemonForm > img {
+  height: 8rem;
+}

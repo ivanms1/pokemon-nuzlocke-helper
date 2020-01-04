@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { Position, Tooltip } from '@blueprintjs/core';
 
@@ -12,9 +12,15 @@ interface DeadProps {
       image: string;
     };
   }[];
+  selectPokemon: Dispatch<
+    SetStateAction<{
+      isOpen: boolean;
+      pokemon: null;
+    }>
+  >;
 }
 
-function Dead({ pokemons }: DeadProps) {
+function Dead({ pokemons, selectPokemon }: DeadProps) {
   return (
     <Droppable droppableId='DEAD'>
       {provided => (
@@ -36,6 +42,12 @@ function Dead({ pokemons }: DeadProps) {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
+                        onClick={() =>
+                          selectPokemon({
+                            isOpen: true,
+                            pokemon
+                          })
+                        }
                       >
                         <img
                           src={pokemon.pokemon.sprite}
