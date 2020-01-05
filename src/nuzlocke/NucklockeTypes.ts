@@ -44,11 +44,11 @@ const NuzlockeSchema = gql`
 
   input NuzlockePokemonInput {
     id: ID
-    pokemon: Int!
+    pokemon: Int
     partner: Int
-    location: String!
+    location: String
     nickname: String
-    status: StatusType!
+    status: StatusType
     level: Int
     moves: [Int!]
   }

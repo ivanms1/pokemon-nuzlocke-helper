@@ -33,9 +33,9 @@ const Team = ({ pokemons, nuzlockeType, selectPokemon }: TeamProps) => {
           {...provided.droppableProps}
         >
           <h2>Team</h2>
-          {pokemons.length > 0 ? (
-            <div className={styles.TeamGrid}>
-              {pokemons.map((pokemon: any, index: number) => (
+          <div className={styles.TeamGrid}>
+            {pokemons.length > 0 ? (
+              pokemons.map((pokemon: any, index: number) => (
                 <Tooltip
                   key={pokemon._id}
                   className={styles.TooltipWrapper}
@@ -76,11 +76,11 @@ const Team = ({ pokemons, nuzlockeType, selectPokemon }: TeamProps) => {
                     )}
                   </Draggable>
                 </Tooltip>
-              ))}
-            </div>
-          ) : (
-            <span>No Pokemons added yet :(</span>
-          )}
+              ))
+            ) : (
+              <span>No Pokemons added yet :(</span>
+            )}
+          </div>
           {provided.placeholder}
         </div>
       )}
