@@ -4,7 +4,7 @@ import { Position, Tooltip } from '@blueprintjs/core';
 import styles from './Nuzlocke.module.css';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-interface EncountersProps {
+interface SeenProps {
   pokemons: {
     _id: string;
     nickname: string;
@@ -23,21 +23,20 @@ interface EncountersProps {
   >;
 }
 
-function Encounters({ pokemons, selectPokemon }: EncountersProps) {
-  console.log(pokemons);
+function Seen({ pokemons, selectPokemon }: SeenProps) {
   return (
     <Droppable droppableId='SEEN'>
       {provided => (
         <div
-          className={styles.Encounters}
+          className={styles.Seen}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
-          <h2>Seen</h2>
+          <h2>Not Caugth</h2>
           <div className={styles.EncounterList}>
             {pokemons.length > 0 ? (
               pokemons.map((pokemon: any, index: number) => (
-                <div key={pokemon._id} className={styles.Encounter}>
+                <div key={pokemon._id} className={styles.SeenPokemon}>
                   <Tooltip
                     key={pokemon._id}
                     content={
@@ -63,7 +62,6 @@ function Encounters({ pokemons, selectPokemon }: EncountersProps) {
                       )}
                     </Draggable>
                   </Tooltip>
-                  <span>{pokemon.location}</span>
                 </div>
               ))
             ) : (
@@ -76,4 +74,4 @@ function Encounters({ pokemons, selectPokemon }: EncountersProps) {
   );
 }
 
-export default Encounters;
+export default Seen;

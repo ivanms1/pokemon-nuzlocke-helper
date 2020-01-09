@@ -2,9 +2,15 @@
   margin: 5rem 8rem;
 }
 
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .Pokemons {
   display: flex;
-  margin-bottom: 2rem;
+  margin: 1rem 0;
 }
 
 .Pokemons > div:not(:last-child) {
@@ -83,6 +89,15 @@
 .SubmitButton {
   max-height: 3rem;
   max-width: 10rem;
+}
+
+.SeenPokemon {
+  display: flex;
+  align-items: center;
+}
+
+.Encounters {
+  padding: 1rem;
 }
 
 .Encounter {

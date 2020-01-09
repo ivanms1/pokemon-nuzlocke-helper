@@ -10,10 +10,11 @@ import AddNewPokemon from './AddNewPokemon';
 import Team from './Team';
 import InPc from './InPc';
 import Dead from './Dead';
-import Encounters from './Encounters';
+import Seen from './Seen';
 import PokemonDrawer from './PokemonDrawer';
 
 import styles from './Nuzlocke.module.css';
+import EncountersDrawer from './EncountersDrawer';
 
 const QUERY_GET_NUZLOCKE = loader('./queryGetNuzlocke.graphql');
 const MUTATION_UPDATE_POKEMON_STATUS = loader(
@@ -35,6 +36,7 @@ const getType = (type: string) => {
 
 const Nuzlocke = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEncountersModalOpen, setIsEncountersModalOpen] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState<{
     isOpen: boolean;
     pokemon: any;
@@ -123,10 +125,19 @@ const Nuzlocke = () => {
   return (
     <div className={styles.Nuzlocke}>
       <div className={styles.Header}>
-        {nuzlocke && <h1>{nuzlocke.name}</h1>}
-        <h2>{nuzlocke.game.name}</h2>
-        <span>{getType(nuzlocke.type)}</span>
+        <h1>{nuzlocke.name}</h1>
+        <Button
+          onClick={() => setIsEncountersModalOpen(true)}
+          large
+          minimal
+          intent='primary'
+          rightIcon='compass'
+        >
+          All Encounters
+        </Button>
       </div>
+      <h2>{nuzlocke.game.name}</h2>
+      <span>{getType(nuzlocke.type)}</span>
       <div className={styles.Pokemons}>
         <DragDropContext onDragEnd={onDragEnd}>
           <Team
@@ -136,11 +147,11 @@ const Nuzlocke = () => {
           />
           <InPc pokemons={inPc} selectPokemon={setSelectedPokemon} />
           <Dead pokemons={deadMons} selectPokemon={setSelectedPokemon} />
-          <Encounters pokemons={seenMons} selectPokemon={setSelectedPokemon} />
+          <Seen pokemons={seenMons} selectPokemon={setSelectedPokemon} />
         </DragDropContext>
       </div>
       <Button
-        icon={ADD}
+        rightIcon={ADD}
         intent='primary'
         onClick={() => setIsAddModalOpen(true)}
         large
@@ -159,6 +170,11 @@ const Nuzlocke = () => {
         regionId={nuzlocke.game.region.id}
         nuzlocke={nuzlocke}
         onClose={() => setSelectedPokemon({ isOpen: false, pokemon: null })}
+      />
+      <EncountersDrawer
+        isOpen={isEncountersModalOpen}
+        onClose={() => setIsEncountersModalOpen(false)}
+        pokemons={nuzlocke.pokemons}
       />
     </div>
   );

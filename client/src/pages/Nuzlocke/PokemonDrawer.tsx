@@ -72,7 +72,6 @@ const PokemonDrawer = ({
   if (!pokemon) {
     return null;
   }
-  console.log(pokemon);
   return (
     <Drawer
       isOpen={isOpen}
