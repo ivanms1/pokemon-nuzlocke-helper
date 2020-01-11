@@ -18,6 +18,7 @@ interface AddNewPokemonProps {
   isOpen: boolean;
   onClose: () => void;
   regionId: string;
+  gameId: string;
   nuzlocke: {
     _id: string;
     type: string;
@@ -46,13 +47,15 @@ const AddNewPokemon = ({
   isOpen,
   onClose,
   regionId,
-  nuzlocke
+  nuzlocke,
+  gameId
 }: AddNewPokemonProps) => {
   const { data, loading } = useQuery<PokemonDataProps, any>(
     QUERY_ADD_POKEMON_DATA,
     {
       variables: {
-        regionId
+        regionId,
+        gameId
       }
     }
   );

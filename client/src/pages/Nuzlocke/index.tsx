@@ -162,6 +162,7 @@ const Nuzlocke = () => {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         regionId={nuzlocke.game.region.id}
+        gameId={nuzlocke.game.id}
         nuzlocke={nuzlocke}
       />
       <PokemonDrawer

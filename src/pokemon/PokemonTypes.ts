@@ -20,7 +20,7 @@ const PokemonSchema = gql`
   }
 
   extend type Query {
-    getPokemons: [Pokemon]
+    getPokemons(game: Int): [Pokemon]
     getPokemon(id: Int!): Pokemon
   }
 `;
