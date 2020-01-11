@@ -38,6 +38,7 @@ interface PokemonDrawerProps {
     type: string;
   };
   regionId: string;
+  gameId: string;
 }
 
 interface PokemonDataProps {
@@ -56,14 +57,17 @@ const PokemonDrawer = ({
   nuzlocke,
   regionId,
   onClose,
+  gameId,
   isOpen
 }: PokemonDrawerProps) => {
   const { data, loading } = useQuery<PokemonDataProps, any>(
     QUERY_ADD_POKEMON_DATA,
     {
       variables: {
-        regionId
-      }
+        regionId,
+        gameId
+      },
+      skip: !isOpen
     }
   );
   const [updatePokemon, { loading: updateLoading }] = useMutation(
@@ -80,7 +84,9 @@ const PokemonDrawer = ({
       title='Edit Pokemon'
     >
       {loading || !data ? (
-        <Spinner />
+        <div className={styles.EditPokemonForm}>
+          <Spinner />
+        </div>
       ) : (
         <Formik
           initialValues={{

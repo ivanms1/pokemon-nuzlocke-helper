@@ -1,3 +1,9 @@
+.BackButton {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
+
 .Nuzlocke {
   margin: 5rem 8rem;
 }

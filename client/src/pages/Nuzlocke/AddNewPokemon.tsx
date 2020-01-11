@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, Button } from '@blueprintjs/core';
+import { Dialog, Button, Spinner } from '@blueprintjs/core';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Formik, Form, Field } from 'formik';
 import { loader } from 'graphql.macro';
@@ -56,7 +56,8 @@ const AddNewPokemon = ({
       variables: {
         regionId,
         gameId
-      }
+      },
+      skip: !isOpen
     }
   );
 
@@ -65,7 +66,18 @@ const AddNewPokemon = ({
   );
 
   if (loading || !data) {
-    return null;
+    return (
+      <Dialog
+        isOpen={isOpen}
+        onClose={onClose}
+        className={styles.AddNewPokemon}
+        title='Enter Encounter Details'
+      >
+        <div className={styles.AddNewPokemonContainer}>
+          <Spinner />
+        </div>
+      </Dialog>
+    );
   }
 
   const { pokemons, region } = data;

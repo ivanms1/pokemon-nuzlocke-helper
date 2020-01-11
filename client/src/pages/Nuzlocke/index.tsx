@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { loader } from 'graphql.macro';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { ProgressBar, Button } from '@blueprintjs/core';
@@ -45,6 +45,7 @@ const Nuzlocke = () => {
     pokemon: null
   });
   const { nuzlockeId } = useParams();
+  const history = useHistory();
 
   const { data, loading } = useQuery(QUERY_GET_NUZLOCKE, {
     variables: {
@@ -124,6 +125,14 @@ const Nuzlocke = () => {
 
   return (
     <div className={styles.Nuzlocke}>
+      <Button
+        className={styles.BackButton}
+        onClick={() => history.goBack()}
+        icon='step-backward'
+        minimal
+      >
+        Back to Profile
+      </Button>
       <div className={styles.Header}>
         <h1>{nuzlocke.name}</h1>
         <Button
@@ -169,6 +178,7 @@ const Nuzlocke = () => {
         isOpen={selectedPokemon.isOpen}
         pokemon={selectedPokemon.pokemon}
         regionId={nuzlocke.game.region.id}
+        gameId={nuzlocke.game.id}
         nuzlocke={nuzlocke}
         onClose={() => setSelectedPokemon({ isOpen: false, pokemon: null })}
       />
