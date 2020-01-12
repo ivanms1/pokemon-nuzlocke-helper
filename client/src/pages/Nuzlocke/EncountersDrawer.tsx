@@ -32,7 +32,7 @@ const EncountersDrawer = ({
     >
       <div className={styles.Encounters}>
         {pokemons.map(pok => (
-          <div className={styles.Encounter}>
+          <div key={pok._id} className={styles.Encounter}>
             <Tooltip
               key={pok._id}
               content={pok.nickname ? pok.nickname : pok.pokemon.name}

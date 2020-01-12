@@ -127,7 +127,7 @@ const Nuzlocke = () => {
     <div className={styles.Nuzlocke}>
       <Button
         className={styles.BackButton}
-        onClick={() => history.goBack()}
+        onClick={() => history.push(`/profile/${nuzlocke.user.id}`)}
         icon='step-backward'
         minimal
       >

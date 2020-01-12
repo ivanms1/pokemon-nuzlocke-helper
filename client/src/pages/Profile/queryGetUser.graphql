@@ -6,6 +6,7 @@ query GetUser($userId: ID!) {
       _id
       name
       game {
+        id
         name
       }
       pokemons {

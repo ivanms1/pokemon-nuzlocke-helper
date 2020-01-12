@@ -30,6 +30,9 @@ query GetNuzlocke($id: ID!) {
       status
       level
     }
+    user {
+      id
+    }
     score
     deaths
   }

@@ -56,6 +56,7 @@ const Profile = () => {
   if (loading || !data) {
     return <ProgressBar />;
   }
+
   const { user } = data;
   return (
     <div className={styles.Profile}>
