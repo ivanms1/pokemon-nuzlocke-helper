@@ -108,7 +108,23 @@ const AddNewPokemon = ({
             status: yup
               .string()
               .required()
-              .label('This')
+              .label('This'),
+            location: yup.string().when('isLocationCustom', {
+              is: false,
+              then: yup
+                .string()
+                .required()
+                .label('This'),
+              otherwise: yup.string()
+            }),
+            customLocation: yup.string().when('isLocationCustom', {
+              is: true,
+              then: yup
+                .string()
+                .required()
+                .label('This'),
+              otherwise: yup.string()
+            })
           })}
           onSubmit={async ({
             isLocationCustom,
