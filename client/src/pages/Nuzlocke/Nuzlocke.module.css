@@ -33,6 +33,14 @@
   grid-gap: 1px;
 }
 
+.TeamGrid.empty {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 14rem;
+}
+
 .TeamPokemon {
   width: 7rem;
   height: 7rem;

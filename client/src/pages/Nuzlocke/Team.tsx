@@ -1,8 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import classNames from 'classnames';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { Position, Tooltip } from '@blueprintjs/core';
 
 import styles from './Nuzlocke.module.css';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 interface TeamProps {
   pokemons: {
@@ -33,7 +34,11 @@ const Team = ({ pokemons, nuzlockeType, selectPokemon }: TeamProps) => {
           {...provided.droppableProps}
         >
           <h2>Team</h2>
-          <div className={styles.TeamGrid}>
+          <div
+            className={classNames(styles.TeamGrid, {
+              [styles.empty]: pokemons.length < 1
+            })}
+          >
             {pokemons.length > 0 ? (
               pokemons.map((pokemon: any, index: number) => (
                 <Tooltip
@@ -78,7 +83,7 @@ const Team = ({ pokemons, nuzlockeType, selectPokemon }: TeamProps) => {
                 </Tooltip>
               ))
             ) : (
-              <span>No Pokemons added yet :(</span>
+              <span>No mons in the team</span>
             )}
           </div>
           {provided.placeholder}
