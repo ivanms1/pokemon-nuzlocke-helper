@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { verify } from 'jsonwebtoken';
+import path from 'path';
 import 'dotenv/config';
 
 import typeDefs from './typeDefs';
@@ -71,11 +72,21 @@ app.post('/refresh-token', async (req, res) => {
   return res.send({ ok: true, accessToken: createAccessToken(user) });
 });
 
+app.use(express.static('public'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
+
 server.applyMiddleware({
   app,
   cors: false
 });
 
-app.listen({ port: 4000 }, () =>
-  console.log(`🚀  Server ready at http://localhost:4000${server.graphqlPath}`)
+const PORT = process.env.PORT || 4000;
+
+app.listen({ port: PORT }, () =>
+  console.log(
+    `🚀  Server ready at http://localhost:${PORT}${server.graphqlPath}`
+  )
 );
