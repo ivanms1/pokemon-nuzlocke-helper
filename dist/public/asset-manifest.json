@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2c7563d0.chunk.css",
+    "main.js": "/static/js/main.aaf239e2.chunk.js",
+    "main.js.map": "/static/js/main.aaf239e2.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ccc9168c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ccc9168c.js.map",
+    "static/css/2.f9757cfd.chunk.css": "/static/css/2.f9757cfd.chunk.css",
+    "static/js/2.7c00fba4.chunk.js": "/static/js/2.7c00fba4.chunk.js",
+    "static/js/2.7c00fba4.chunk.js.map": "/static/js/2.7c00fba4.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.144387751c56f745623c7e7c9b6ba63e.js": "/precache-manifest.144387751c56f745623c7e7c9b6ba63e.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.f9757cfd.chunk.css.map": "/static/css/2.f9757cfd.chunk.css.map",
+    "static/css/main.2c7563d0.chunk.css.map": "/static/css/main.2c7563d0.chunk.css.map",
+    "static/media/blueprint-icons.css": "/static/media/icons-20.9f1e6164.woff",
+    "static/media/Home.module.css": "/static/media/pokeball.37ba67e4.jpg"
+  }
+}
