@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const apollo_server_1 = require("apollo-server");
-const PokemonSchema = apollo_server_1.gql `
+const apollo_server_express_1 = require("apollo-server-express");
+const PokemonSchema = apollo_server_express_1.gql `
   type Pokemon {
-    id: Int!
+    _id: Int!
     name: String!
     type: [String!]!
     image: String!
+    sprite: String!
     baseStats: [BaseStats!]
   }
 
@@ -20,8 +21,8 @@ const PokemonSchema = apollo_server_1.gql `
   }
 
   extend type Query {
-    getPokemons: [Pokemon]
-    getPokemon(id:Int!): Pokemon
+    getPokemons(game: Int): [Pokemon]
+    getPokemon(id: Int!): Pokemon
   }
 `;
 exports.default = PokemonSchema;

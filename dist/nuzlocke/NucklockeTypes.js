@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const apollo_server_1 = require("apollo-server");
-const NuzlockeSchema = apollo_server_1.gql `
+const apollo_server_express_1 = require("apollo-server-express");
+const NuzlockeSchema = apollo_server_express_1.gql `
   enum NuzlockeType {
     NORMAL
     CAGELOCKE
@@ -9,37 +9,31 @@ const NuzlockeSchema = apollo_server_1.gql `
   }
 
   enum StatusType {
-    ALIVE
-    DEAD
-    RELEASED
+    IN_TEAM
     IN_PC
+    DEAD
+    SEEN
   }
 
   type Nuzlocke {
     _id: ID!
     type: NuzlockeType!
+    name: String
     game: Game!
-    encounters: [Encounter]
-    team: [TeamPokemon]
+    pokemons: [NuzlockePokemon!]
+    user: User
     score: Int
     deaths: Int
   }
 
-  type Encounter {
+  type NuzlockePokemon {
+    _id: ID!
+    pokemon: Pokemon
+    partner: Pokemon
     location: String
-    pokemon: Pokemon
-    isCaptured: Boolean
-  }
-
-  type TeamPokemon {
-    pokemon: Pokemon
     nickname: String
     status: String
-  }
-
-  extend type Query {
-    getNuzlocke(id:ID!) Nuzlocke
-    getUserNuzlockes(userId: ID) Nuzlocke
+    level: Int
   }
 
   input NuzlockeInput {
@@ -49,25 +43,26 @@ const NuzlockeSchema = apollo_server_1.gql `
     user: ID
   }
 
-  input EncounterInput {
-    location: String!
-    Pokemon: Int!
-    isCaptured: Boolean!
-  }
-
-  input TeamInput {
-    pokemon: Int!
+  input NuzlockePokemonInput {
+    id: ID
+    pokemon: Int
+    partner: Int
+    location: String
     nickname: String
-    status: StatusType!
+    status: StatusType
     level: Int
     moves: [Int!]
-
   }
 
-  type Mutation {
+  extend type Query {
+    getNuzlocke(id: ID!): Nuzlocke
+    getNuzlockes(userId: ID): Nuzlocke
+  }
+
+  extend type Mutation {
     createNuzlocke(input: NuzlockeInput!): Nuzlocke
-    updateEncounters(id: ID! input: [EncounterInput]!): Nuzlocke
-    updateTeam(id: ID! input: [TeamInput]!): Nuzlocke
+    addPokemon(id: ID!, pokemon: NuzlockePokemonInput!): Nuzlocke
+    updatePokemon(id: ID!, pokemon: NuzlockePokemonInput!): Nuzlocke
   }
 `;
 exports.default = NuzlockeSchema;

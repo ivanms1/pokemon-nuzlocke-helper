@@ -1,13 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const apollo_server_1 = require("apollo-server");
-const UserSchema = apollo_server_1.gql `
+const apollo_server_express_1 = require("apollo-server-express");
+const UserSchema = apollo_server_express_1.gql `
   type User {
     id: ID!
     name: String!
     email: String!
-    password: String!
     nuzlockes: [Nuzlocke!]
+  }
+
+  type LoginToken {
+    userId: ID!
+    token: String
+    tokenExpiration: Int
   }
 
   input SignUpInput {
@@ -21,10 +26,15 @@ const UserSchema = apollo_server_1.gql `
     password: String!
   }
 
+  extend type Query {
+    getUser(userId: ID!): User
+    getCurrentUser: User
+  }
+
   type Mutation {
-    signUp(input: SignUpInput!): User
-    login(input: LoginInput!): User
-    updateUser(input: SignUpInput!) User
+    signUp(input: SignUpInput!): LoginToken
+    login(input: LoginInput!): LoginToken
+    updateUser(input: SignUpInput!): User
   }
 `;
 exports.default = UserSchema;

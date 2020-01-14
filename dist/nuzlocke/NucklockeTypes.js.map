@@ -1,1 +1,1 @@
-{"version":3,"file":"NucklockeTypes.js","sourceRoot":"","sources":["../../src/nuzlocke/NucklockeTypes.ts"],"names":[],"mappings":";;AAAA,iDAAoC;AAEpC,MAAM,cAAc,GAAG,mBAAG,CAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;CAoEzB,CAAA;AAED,kBAAe,cAAc,CAAC"}
+{"version":3,"file":"NucklockeTypes.js","sourceRoot":"","sources":["../../src/nuzlocke/NucklockeTypes.ts"],"names":[],"mappings":";;AAAA,iEAA4C;AAE5C,MAAM,cAAc,GAAG,2BAAG,CAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;CA+DzB,CAAC;AAEF,kBAAe,cAAc,CAAC"}

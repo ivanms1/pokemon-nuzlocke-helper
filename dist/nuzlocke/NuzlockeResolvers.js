@@ -13,26 +13,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const NuzlockeModel_1 = __importDefault(require("./NuzlockeModel"));
+const UserModel_1 = __importDefault(require("../user/UserModel"));
 const NuzlockeResolvers = {
     Query: {
-        getNuzlockes: (_, { userId }) => __awaiter(void 0, void 0, void 0, function* () {
-            return yield NuzlockeModel_1.default.find({ user: userId }).populate('region');
+        getNuzlockes: (_, { userId }, { isAuth }) => __awaiter(void 0, void 0, void 0, function* () {
+            return yield NuzlockeModel_1.default.find({ user: userId })
+                .populate('user')
+                .populate({ path: 'game', populate: { path: 'region' } })
+                .populate({ path: 'pokemons', populate: { path: 'pokemon' } })
+                .populate({ path: 'pokemons.partner', model: 'pokemon' });
         }),
-        getNuzlocke: (_, { id }) => __awaiter(void 0, void 0, void 0, function* () {
-            return yield NuzlockeModel_1.default.findById(id).populate('region');
+        getNuzlocke: (_, { id }, { isAuth }) => __awaiter(void 0, void 0, void 0, function* () {
+            if (!isAuth) {
+                throw Error('Not Authorized');
+            }
+            return yield NuzlockeModel_1.default.findById(id)
+                .populate('user')
+                .populate({ path: 'game', populate: { path: 'region' } })
+                .populate({ path: 'pokemons.pokemon', model: 'pokemon' })
+                .populate({ path: 'pokemons.partner', model: 'pokemon' });
         })
     },
-    Mutations: {
-        createNuzlocke: (_, { input }) => __awaiter(void 0, void 0, void 0, function* () {
+    Mutation: {
+        createNuzlocke: (_, { input }, { isAuth }) => __awaiter(void 0, void 0, void 0, function* () {
+            if (!isAuth) {
+                throw Error('Not Authorized');
+            }
             const nuzlocke = yield NuzlockeModel_1.default.create(input);
-            return nuzlocke;
+            yield UserModel_1.default.findByIdAndUpdate(input.user, {
+                $push: { nuzlockes: nuzlocke._id }
+            });
+            return nuzlocke
+                .populate({ path: 'game', populate: { path: 'region' } })
+                .execPopulate();
         }),
-        updateEncounters: (_, { id, input }) => __awaiter(void 0, void 0, void 0, function* () {
-            return yield NuzlockeModel_1.default.findByIdAndUpdate(id, { $set: { encounters: input } }, { new: true });
+        addPokemon: (_, { id, pokemon }, { isAuth }) => __awaiter(void 0, void 0, void 0, function* () {
+            if (!isAuth) {
+                throw Error('Not Authorized');
+            }
+            const updatedNuzlocke = yield NuzlockeModel_1.default.findByIdAndUpdate(id, { $push: { pokemons: pokemon } }, { new: true })
+                .populate({ path: 'game', populate: { path: 'region' } })
+                .populate({ path: 'pokemons.pokemon', model: 'pokemon' })
+                .populate({ path: 'pokemons.partner', model: 'pokemon' });
+            return updatedNuzlocke;
         }),
-        updateTeam: (_, { id, input }) => __awaiter(void 0, void 0, void 0, function* () {
-            return yield NuzlockeModel_1.default.findByIdAndUpdate(id, { $set: { team: input } }, { new: true });
-        }),
+        updatePokemon: (_, { id, pokemon }, { isAuth }) => __awaiter(void 0, void 0, void 0, function* () {
+            if (!isAuth) {
+                throw Error('Not Authorized');
+            }
+            const updatedNuzlocke = yield NuzlockeModel_1.default.findOneAndUpdate({ _id: id, 'pokemons._id': pokemon.id }, { $set: { 'pokemons.$': pokemon } }, { new: true })
+                .populate({ path: 'game', populate: { path: 'region' } })
+                .populate({ path: 'pokemons.pokemon', model: 'pokemon' })
+                .populate({ path: 'pokemons.partner', model: 'pokemon' });
+            return updatedNuzlocke;
+        })
     }
 };
 exports.default = NuzlockeResolvers;

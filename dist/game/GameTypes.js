@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const apollo_server_1 = require("apollo-server");
-const GameSchema = apollo_server_1.gql `
+const apollo_server_express_1 = require("apollo-server-express");
+const GameSchema = apollo_server_express_1.gql `
   type Game {
     id: Int!
     name: String!

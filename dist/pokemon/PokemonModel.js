@@ -15,6 +15,10 @@ const PokemonSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    sprite: {
+        type: String,
+        required: true
+    },
     baseStats: {
         hp: {
             type: Number,

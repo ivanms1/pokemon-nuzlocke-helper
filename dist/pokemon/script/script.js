@@ -23,7 +23,8 @@ pokemons_1.pokemons.map((pokemon) => {
             specialDefense: pokemon.base['Sp. Defense'],
             speed: pokemon.base.Speed
         },
-        image: `https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${(('000' + pokemon.id).substr(-3))}.png`
+        image: `https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${(('000' + pokemon.id).substr(-3))}.png`,
+        sprite: `https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/sprites/${(('000' + pokemon.id).substr(-3))}MS.png`
     }).save();
 });
 //# sourceMappingURL=script.js.map

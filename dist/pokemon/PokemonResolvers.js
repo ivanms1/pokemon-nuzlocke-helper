@@ -15,7 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PokemonModel_1 = __importDefault(require("./PokemonModel"));
 const PokemonResolvers = {
     Query: {
-        getPokemons: () => __awaiter(void 0, void 0, void 0, function* () {
+        getPokemons: (_, { game }) => __awaiter(void 0, void 0, void 0, function* () {
+            if (game <= 3)
+                return yield PokemonModel_1.default.find({ _id: { $lte: 151 } });
+            if (game <= 6)
+                return yield PokemonModel_1.default.find({ _id: { $lte: 251 } });
+            if (game <= 11)
+                return yield PokemonModel_1.default.find({ _id: { $lte: 386 } });
+            if (game <= 16)
+                return yield PokemonModel_1.default.find({ _id: { $lte: 493 } });
+            if (game <= 22)
+                return yield PokemonModel_1.default.find({ _id: { $lte: 649 } });
+            if (game <= 26)
+                return yield PokemonModel_1.default.find({ _id: { $lte: 721 } });
             return yield PokemonModel_1.default.find();
         }),
         getPokemon: (_, { id }) => __awaiter(void 0, void 0, void 0, function* () {
