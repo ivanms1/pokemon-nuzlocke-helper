@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { verify } from 'jsonwebtoken';
-import path from 'path';
 import 'dotenv/config';
 
 import typeDefs from './typeDefs';
@@ -70,12 +69,6 @@ app.post('/refresh-token', async (req, res) => {
   sendRefreshToken(res, createRefreshToken(user));
 
   return res.send({ ok: true, accessToken: createAccessToken(user) });
-});
-
-app.use(express.static('public'));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
 server.applyMiddleware({
