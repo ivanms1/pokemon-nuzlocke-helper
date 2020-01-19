@@ -9,10 +9,12 @@ import CustomSelect from '../../components/Formik/CustomSelect';
 
 import styles from './Nuzlocke.module.css';
 
+const QUERY_GET_NUZLOCKE = loader('./queryGetNuzlocke.graphql');
 const QUERY_ADD_POKEMON_DATA = loader('./queryAddPokemonData.graphql');
 const MUTATION_UPDATE_POKEMON_STATUS = loader(
   './mutationUpdatePokemonStatus.graphql'
 );
+const MUTATION_DELETE_POKEMON = loader('./mutationDeletePokemon.graphql');
 
 interface PokemonDrawerProps {
   onClose: () => void;
@@ -73,6 +75,10 @@ const PokemonDrawer = ({
   const [updatePokemon, { loading: updateLoading }] = useMutation(
     MUTATION_UPDATE_POKEMON_STATUS
   );
+  const [deletePokemon, { loading: deleteLoading }] = useMutation(
+    MUTATION_DELETE_POKEMON
+  );
+
   if (!pokemon) {
     return null;
   }
@@ -164,15 +170,49 @@ const PokemonDrawer = ({
                   }))}
                 />
               )}
-              <Button
-                type='submit'
-                intent='success'
-                loading={updateLoading}
-                large
-                rightIcon='floppy-disk'
-              >
-                Save
-              </Button>
+              <div className={styles.PokemonDrawerButtons}>
+                <Button
+                  type='submit'
+                  intent='success'
+                  loading={updateLoading}
+                  large
+                  rightIcon='floppy-disk'
+                >
+                  Save
+                </Button>
+                <Button
+                  intent='danger'
+                  onClick={async () => {
+                    await deletePokemon({
+                      variables: {
+                        id: nuzlocke._id,
+                        pokemonId: pokemon._id
+                      },
+                      update: (store, { data: { deletePokemon } }) => {
+                        const data: any = store.readQuery({
+                          query: QUERY_GET_NUZLOCKE,
+                          variables: {
+                            id: nuzlocke._id
+                          }
+                        });
+                        data.nuzlocke.pokemons = data.nuzlocke.pokemons.filter(
+                          (pok: any) => pok._id !== deletePokemon
+                        );
+                        store.writeQuery({
+                          query: QUERY_GET_NUZLOCKE,
+                          data
+                        });
+                      }
+                    });
+                    onClose();
+                  }}
+                  loading={deleteLoading}
+                  small
+                  minimal
+                >
+                  Delete
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>

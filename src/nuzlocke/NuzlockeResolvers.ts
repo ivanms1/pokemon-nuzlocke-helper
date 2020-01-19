@@ -63,6 +63,17 @@ const NuzlockeResolvers = {
         .populate({ path: 'pokemons.partner', model: 'pokemon' });
 
       return updatedNuzlocke;
+    },
+    deletePokemon: async (_: any, { id, pokemonId }: any, { isAuth }: any) => {
+      if (!isAuth) {
+        throw Error('Not Authorized');
+      }
+      await Nuzlocke.findOneAndUpdate(
+        { _id: id },
+        { $pull: { pokemons: { _id: pokemonId } } }
+      );
+
+      return pokemonId;
     }
   }
 };

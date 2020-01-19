@@ -1,0 +1,3 @@
+mutation DeletePokemon($id: ID!, $pokemonId: ID!) {
+  deletePokemon(id: $id, pokemonId: $pokemonId)
+}
