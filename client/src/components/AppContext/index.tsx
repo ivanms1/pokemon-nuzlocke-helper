@@ -1,12 +1,14 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useApolloClient } from '@apollo/react-hooks';
-// import { useHistory } from 'react-router';
+import { useMutation } from '@apollo/react-hooks';
+import { loader } from 'graphql.macro';
 
 import {
   getAccessToken,
   isTokenValid,
   setAccessToken
 } from '../../accessToken';
+
+const MUTATION_LOGOUT = loader('./mutationLogout.graphql');
 
 const Context = React.createContext<any>(null);
 
@@ -20,8 +22,7 @@ const AppProvider = ({ children }: AppWrapperProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(isTokenValid(token));
   const [loading, setLoading] = useState(true);
 
-  // const history = useHistory();
-  const client = useApolloClient();
+  const [logout, { client }] = useMutation(MUTATION_LOGOUT);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -49,13 +50,14 @@ const AppProvider = ({ children }: AppWrapperProps) => {
         setAccessToken(token);
         setIsAuthenticated(true);
       },
-      onLogout: () => {
-        // history.replace('/login');
-        client.resetStore();
+      onLogout: async () => {
+        await logout();
+        setAccessToken('');
         setIsAuthenticated(false);
+        client!.resetStore();
       }
     }),
-    [client, isAuthenticated]
+    [client, isAuthenticated, logout]
   );
   if (loading) {
     return null;

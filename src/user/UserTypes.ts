@@ -34,6 +34,7 @@ const UserSchema = gql`
     signUp(input: SignUpInput!): LoginToken
     login(input: LoginInput!): LoginToken
     updateUser(input: SignUpInput!): User
+    logout: Boolean
   }
 `;
 

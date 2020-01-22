@@ -26,6 +26,7 @@
     "graphql-tag": "^2.10.1",
     "graphql.macro": "^1.4.2",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.15",
     "react": "^16.10.1",
     "react-beautiful-dnd": "^12.1.1",
     "react-dom": "^16.10.1",

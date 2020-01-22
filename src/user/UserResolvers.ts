@@ -1,6 +1,5 @@
 import User from './UserModel';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import {
   createRefreshToken,
   createAccessToken,
@@ -64,15 +63,20 @@ const UserResolvers = {
 
       const token = createAccessToken(user);
 
-      res.cookie('nuzlocke-helper', createRefreshToken(user), {
-        httpOnly: true
-      });
+      sendRefreshToken(res, createRefreshToken(user));
 
       return {
         userId: user.id,
         token,
         tokenExpiration: 3
       };
+    },
+    logout: async (_: any, __: any, { res }: any) => {
+      res.clearCookie('nuzlocke-helper', {
+        httpOnly: true,
+        path: '/refresh-token'
+      });
+      return true;
     }
   }
 };

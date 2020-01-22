@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { loader } from 'graphql.macro';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { ProgressBar, Button } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd';
 import { ADD } from '@blueprintjs/icons/lib/esm/generated/iconNames';
 
@@ -12,9 +12,10 @@ import InPc from './InPc';
 import Dead from './Dead';
 import Seen from './Seen';
 import PokemonDrawer from './PokemonDrawer';
+import EncountersDrawer from './EncountersDrawer';
+import LoadingPage from '../../components/Loading/LoadingPage';
 
 import styles from './Nuzlocke.module.css';
-import EncountersDrawer from './EncountersDrawer';
 
 const QUERY_GET_NUZLOCKE = loader('./queryGetNuzlocke.graphql');
 const MUTATION_UPDATE_POKEMON_STATUS = loader(
@@ -56,7 +57,7 @@ const Nuzlocke = () => {
   const [updatePokemonStatus] = useMutation(MUTATION_UPDATE_POKEMON_STATUS);
 
   if (loading || !data) {
-    return <ProgressBar />;
+    return <LoadingPage />;
   }
 
   const { nuzlocke } = data;

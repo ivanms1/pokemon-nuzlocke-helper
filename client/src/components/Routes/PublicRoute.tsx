@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import { ProgressBar } from '@blueprintjs/core';
 import { loader } from 'graphql.macro';
 
 import Context from '../AppContext';
+import LoadingPage from '../Loading/LoadingPage';
 
 const QUERY_GET_CURRENT_USER = loader('./queryGetCurrentUser.graphql');
 
@@ -22,7 +22,7 @@ const PublicRoute = ({ path, children, ...props }: PublicRouteProps) => {
 
   if (isAuthenticated) {
     if (loading) {
-      return <ProgressBar />;
+      return <LoadingPage />;
     }
     return <Redirect to={`/profile/${data.user.id}`} />;
   }

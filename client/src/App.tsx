@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Nuzlocke from './pages/Nuzlocke';
 import Register from './pages/Register';
+import About from './pages/About';
 import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 import PublicRoute from './components/Routes/PublicRoute';
 
@@ -27,6 +28,9 @@ const App: React.FC = () => {
         </AuthenticatedRoute>
         <AuthenticatedRoute path='/nuzlocke/:nuzlockeId'>
           <Nuzlocke />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path='/about'>
+          <About />
         </AuthenticatedRoute>
       </Switch>
     </Router>

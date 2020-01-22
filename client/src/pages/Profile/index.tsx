@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { loader } from 'graphql.macro';
-import { Button, ProgressBar } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 
 import NuzlockePreview from './NuzlockePreview';
 import AddNuzlockeDrawer from './AddNuzlockeDrawer';
+import LoadingPage from '../../components/Loading/LoadingPage';
 
 import { ADD } from '@blueprintjs/icons/lib/esm/generated/iconNames';
 
@@ -54,7 +55,7 @@ const Profile = () => {
   });
 
   if (loading || !data) {
-    return <ProgressBar />;
+    return <LoadingPage />;
   }
 
   const { user } = data;

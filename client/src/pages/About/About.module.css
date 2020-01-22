@@ -1,0 +1,14 @@
+.About {
+  margin: 5rem 8rem;
+}
+
+.About > h1 {
+  font-size: 3rem;
+  font-weight: 100;
+}
+
+.About > h3 {
+  font-size: 2rem;
+  font-weight: 100;
+  margin-bottom: 1rem;
+}
