@@ -66,7 +66,13 @@ const AddNuzlockeDrawer = ({ onClose, isOpen }: AddNuzlockeDrawerProps) => {
     }))
     .sort((a: any, b: any) => a.value - b.value);
   return (
-    <Drawer isOpen={isOpen} onClose={onClose} title='Add New Nuzlocke'>
+    <Drawer
+      isOpen={isOpen}
+      className={styles.AddNuzlockeDrawer}
+      size={Drawer.SIZE_STANDARD}
+      onClose={onClose}
+      title='Add New Nuzlocke'
+    >
       <Formik
         initialValues={{
           game: '',

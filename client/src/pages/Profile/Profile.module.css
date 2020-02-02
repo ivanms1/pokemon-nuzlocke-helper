@@ -1,5 +1,5 @@
 .Profile {
-  margin: 5rem 8rem 0 8rem;
+  margin: 4rem 1rem 0 1rem;
 }
 
 .Profile > h1 {
@@ -33,7 +33,7 @@
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
-  min-height: 8rem;
+  height: 8rem;
   min-width: 18rem;
   padding: 1rem;
   transition: all 0.1s ease-in;
@@ -68,6 +68,24 @@
   margin: 1rem 0;
 }
 
+.AddNuzlockeDrawer {
+  width: 80% !important;
+}
+
 .AddNuzlockeForm {
-  padding: 3rem 6rem;
+  padding: 1rem;
+}
+
+@media (min-width: 800px) {
+  .Profile {
+    margin: 5rem 8rem 0 8rem;
+  }
+
+  .AddNuzlockeDrawer {
+    width: 50% !important;
+  }
+
+  .AddNuzlockeForm {
+    padding: 3rem 6rem;
+  }
 }
