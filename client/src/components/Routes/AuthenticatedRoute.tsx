@@ -1,12 +1,11 @@
-import React, { useContext, useState } from 'react';
-import classNames from 'classnames';
-import { Redirect, Route, useHistory } from 'react-router-dom';
-import { Navbar, Button } from '@blueprintjs/core';
+import React, { useContext } from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 import Context from '../AppContext';
-import useCurrentUser from '../UseCurrentUser';
+import DesktopNavbar from '../NavbarMenu/DesktopNavbar';
+import MobileNavbar from '../NavbarMenu/MobileNavbar';
 
-import styles from './AuthenticatedRoute.module.css';
+import useCurrentUser from '../UseCurrentUser';
 
 interface AuthenticatedRouteProps {
   path: string;
@@ -14,10 +13,8 @@ interface AuthenticatedRouteProps {
 }
 
 const AuthenticatedRoute = ({ path, children }: AuthenticatedRouteProps) => {
-  const [currentPage, setCurrentPage] = useState('nuzlockes');
   const { currentUser, loading: userLoading } = useCurrentUser();
-  const history = useHistory();
-  const { isAuthenticated, onLogout } = useContext(Context);
+  const { isAuthenticated } = useContext(Context);
 
   if (!isAuthenticated) {
     return <Redirect to='/login' />;
@@ -28,47 +25,8 @@ const AuthenticatedRoute = ({ path, children }: AuthenticatedRouteProps) => {
   }
   return (
     <Route path={path}>
-      <Navbar fixedToTop className='bp3-dark'>
-        <Navbar.Group align='left'>
-          <Navbar.Heading>Nuzlocke Tracker</Navbar.Heading>
-          <Navbar.Divider />
-          <Button
-            minimal
-            className={classNames({
-              [styles.active]: currentPage === 'nuzlockes'
-            })}
-            icon='map-create'
-            text='Nuzlockes'
-            onClick={() => {
-              setCurrentPage('nuzlockes');
-              history.push(`/profile/${currentUser.id}`);
-            }}
-          />
-          <Button
-            minimal
-            className={classNames({
-              [styles.active]: currentPage === 'about'
-            })}
-            icon='info-sign'
-            text='About'
-            onClick={() => {
-              setCurrentPage('about');
-              history.push('/about');
-            }}
-          />
-        </Navbar.Group>
-        <Navbar.Group align='right'>
-          <Button
-            minimal
-            icon='log-out'
-            text='Logout'
-            onClick={async () => {
-              await onLogout();
-              history.push('/login');
-            }}
-          />
-        </Navbar.Group>
-      </Navbar>
+      <DesktopNavbar />
+      <MobileNavbar />
       {children}
     </Route>
   );

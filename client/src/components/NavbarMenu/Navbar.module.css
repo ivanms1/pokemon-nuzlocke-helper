@@ -1,0 +1,42 @@
+.active {
+  background: rgba(138, 155, 168, 0.15) !important;
+}
+
+.DesktopNavbar {
+  display: none;
+}
+
+.MobileNavbar {
+  padding: 0 !important;
+}
+
+.MenuButton > span {
+  font-size: 1.5rem;
+}
+
+.SideBar > li:not(:first-child) {
+  padding-left: 0.5rem !important;
+}
+
+.MobileMenuHeader {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.MobileMenuItem {
+  margin-bottom: 0.5rem;
+}
+
+.MobileNavbarText {
+  font-size: 1.5rem;
+  overflow: visible !important;
+}
+
+@media (min-width: 800px) {
+  .DesktopNavbar {
+    display: initial;
+  }
+  .MobileNavbar {
+    display: none;
+  }
+}
